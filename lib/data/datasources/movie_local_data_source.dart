@@ -1,6 +1,5 @@
-import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/exception.dart';
-import 'package:nonton_app/data/db/database_helper.dart';
+import 'package:nonton_app/data/datasources/db/database_helper.dart';
 import 'package:nonton_app/data/models/movie_table.dart';
 
 abstract class MovieLocalDataSource {
@@ -18,8 +17,8 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<String> insertWatchlist(MovieTable movie) async {
     try {
-      await databaseHelper.insertMovieWatchlist(movie);
-      return WATCHLIST_ADD_SUCCESS_MESSAGE;
+      await databaseHelper.insertWatchlist(movie);
+      return 'Added to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
     }
@@ -28,8 +27,8 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<String> removeWatchlist(MovieTable movie) async {
     try {
-      await databaseHelper.removeMovieWatchlist(movie);
-      return WATCHLIST_REMOVE_SUCCESS_MESSAGE;
+      await databaseHelper.removeWatchlist(movie);
+      return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
     }
