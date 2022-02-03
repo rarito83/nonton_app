@@ -1,34 +1,33 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/genre.dart';
-import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/domain/entities/movie_detail.dart';
-import 'package:nonton_app/presentation/providers/movie_detail_notifier.dart';
+import 'package:nonton_app/domain/entities/tv_show.dart';
+import 'package:nonton_app/domain/entities/tv_show_detail.dart';
+import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
+import 'package:nonton_app/presentation/providers/tvshow/tv_show_detail_notifier.dart';
 import 'package:provider/provider.dart';
 
-class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+class TvShowDetailPage extends StatefulWidget {
+  static const ROUTE_NAME = '/detailTvShow';
 
   final int id;
-  MovieDetailPage({required this.id});
+  TvShowDetailPage({required this.id});
 
   @override
-  _MovieDetailPageState createState() => _MovieDetailPageState();
+  _TvShowDetailPageState createState() => _TvShowDetailPageState();
 }
 
-class _MovieDetailPageState extends State<MovieDetailPage> {
+class _TvShowDetailPageState extends State<TvShowDetailPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<MovieDetailNotifier>(context, listen: false)
-          .fetchMovieDetail(widget.id);
-      Provider.of<MovieDetailNotifier>(context, listen: false)
+      Provider.of<TvShowDetailNotifier>(context, listen: false)
+          .fetchTvShowDetail(widget.id);
+      Provider.of<TvShowDetailNotifier>(context, listen: false)
           .loadWatchlistStatus(widget.id);
     });
   }
@@ -36,18 +35,18 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<MovieDetailNotifier>(
+      body: Consumer<TvShowDetailNotifier>(
         builder: (context, provider, child) {
-          if (provider.movieState == RequestState.loading) {
+          if (provider.tvShowState == RequestState.loading) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (provider.movieState == RequestState.loaded) {
-            final movie = provider.movie;
+          } else if (provider.tvShowState == RequestState.loaded) {
+            final tv = provider.tvShowDetail;
             return SafeArea(
-              child: DetailContent(
-                movie,
-                provider.movieRecommendations,
+              child: DetailTvContent(
+                tv,
+                provider.tvShowRecommendations,
                 provider.isAddedToWatchlist,
               ),
             );
@@ -60,12 +59,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 }
 
-class DetailContent extends StatelessWidget {
-  final MovieDetail movie;
-  final List<Movie> recommendations;
+class DetailTvContent extends StatelessWidget {
+  final TvShowDetail tvShow;
+  final List<TvShow> recommendations;
   final bool isAddedWatchlist;
 
-  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+  DetailTvContent(this.tvShow, this.recommendations, this.isAddedWatchlist);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +72,7 @@ class DetailContent extends StatelessWidget {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+          imageUrl: 'https://image.tmdb.org/t/p/w500${tvShow.posterPath}',
           width: screenWidth,
           placeholder: (context, url) => Center(
             child: CircularProgressIndicator(),
@@ -104,33 +103,33 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              movie.title,
+                              tvShow.name,
                               style: kHeading5,
                             ),
                             ElevatedButton(
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
-                                  await Provider.of<MovieDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .addWatchlist(movie);
+                                  await Provider.of<TvShowDetailNotifier>(
+                                      context,
+                                      listen: false)
+                                      .addWatchlist(tvShow);
                                 } else {
-                                  await Provider.of<MovieDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .removeFromWatchlist(movie);
+                                  await Provider.of<TvShowDetailNotifier>(
+                                      context,
+                                      listen: false)
+                                      .removeFromWatchlist(tvShow);
                                 }
 
                                 final message =
-                                    Provider.of<MovieDetailNotifier>(context,
-                                            listen: false)
+                                    Provider.of<TvShowDetailNotifier>(context,
+                                        listen: false)
                                         .watchlistMessage;
 
                                 if (message ==
-                                        MovieDetailNotifier
-                                            .watchlistAddSuccessMessage ||
+                                    TvShowDetailNotifier
+                                        .watchlistAddSuccessMessage ||
                                     message ==
-                                        MovieDetailNotifier
+                                        TvShowDetailNotifier
                                             .watchlistRemoveSuccessMessage) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(message)));
@@ -155,15 +154,15 @@ class DetailContent extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _showGenres(movie.genres),
+                              _showGenres(tvShow.genres),
                             ),
-                            Text(
-                              _showDuration(movie.runtime),
+                            Text("Runtime"
+                              // _showDuration(tvShow.runtime),
                             ),
                             Row(
                               children: [
                                 RatingBarIndicator(
-                                  rating: movie.voteAverage / 2,
+                                  rating: tvShow.voteAverage / 2,
                                   itemCount: 5,
                                   itemBuilder: (context, index) => Icon(
                                     Icons.star,
@@ -171,7 +170,7 @@ class DetailContent extends StatelessWidget {
                                   ),
                                   itemSize: 24,
                                 ),
-                                Text('${movie.voteAverage}')
+                                Text('${tvShow.voteAverage}')
                               ],
                             ),
                             SizedBox(height: 16),
@@ -180,14 +179,14 @@ class DetailContent extends StatelessWidget {
                               style: kHeading6,
                             ),
                             Text(
-                              movie.overview,
+                              tvShow.overview,
                             ),
                             SizedBox(height: 16),
                             Text(
                               'Recommendations',
                               style: kHeading6,
                             ),
-                            Consumer<MovieDetailNotifier>(
+                            Consumer<TvShowDetailNotifier>(
                               builder: (context, data, child) {
                                 if (data.recommendationState ==
                                     RequestState.loading) {
@@ -221,15 +220,15 @@ class DetailContent extends StatelessWidget {
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                                'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                                                 placeholder: (context, url) =>
                                                     Center(
-                                                  child:
+                                                      child:
                                                       CircularProgressIndicator(),
-                                                ),
+                                                    ),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                    Icon(Icons.error),
                                               ),
                                             ),
                                           ),
@@ -305,3 +304,4 @@ class DetailContent extends StatelessWidget {
     }
   }
 }
+

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
 import 'package:nonton_app/domain/entities/movie_detail.dart';
-import 'package:nonton_app/domain/usecases/get_movie_detail.dart';
-import 'package:nonton_app/domain/usecases/get_movie_recommendations.dart';
-import 'package:nonton_app/domain/usecases/get_watchlist_status.dart';
-import 'package:nonton_app/domain/usecases/remove_watchlist.dart';
-import 'package:nonton_app/domain/usecases/save_watchlist.dart';
+import 'package:nonton_app/domain/usecases/movie/get_movie_detail.dart';
+import 'package:nonton_app/domain/usecases/movie/get_movie_recommendations.dart';
+import 'package:nonton_app/domain/usecases/movie/get_watchlist_movie_status.dart';
+import 'package:nonton_app/domain/usecases/movie/remove_movie_watchlist.dart';
+import 'package:nonton_app/domain/usecases/movie/save_movie_watchlist.dart';
 
 class MovieDetailNotifier extends ChangeNotifier {
   static const watchlistAddSuccessMessage = 'Added to Watchlist';
@@ -15,34 +15,40 @@ class MovieDetailNotifier extends ChangeNotifier {
 
   final GetMovieDetail getMovieDetail;
   final GetMovieRecommendations getMovieRecommendations;
-  final GetWatchListStatus getWatchListStatus;
-  final SaveWatchlist saveWatchlist;
-  final RemoveWatchlist removeWatchlist;
+  final GetWatchListMovieStatus getWatchListMovieStatus;
+  final SaveMovieWatchlist saveMovieWatchlist;
+  final RemoveMovieWatchlist removeMovieWatchlist;
 
   MovieDetailNotifier({
     required this.getMovieDetail,
     required this.getMovieRecommendations,
-    required this.getWatchListStatus,
-    required this.saveWatchlist,
-    required this.removeWatchlist,
+    required this.getWatchListMovieStatus,
+    required this.saveMovieWatchlist,
+    required this.removeMovieWatchlist,
   });
 
   late MovieDetail _movie;
+
   MovieDetail get movie => _movie;
 
   RequestState _movieState = RequestState.empty;
+
   RequestState get movieState => _movieState;
 
   List<Movie> _movieRecommendations = [];
+
   List<Movie> get movieRecommendations => _movieRecommendations;
 
   RequestState _recommendationState = RequestState.empty;
+
   RequestState get recommendationState => _recommendationState;
 
   String _message = '';
+
   String get message => _message;
 
   bool _isAddedtoWatchlist = false;
+
   bool get isAddedToWatchlist => _isAddedtoWatchlist;
 
   Future<void> fetchMovieDetail(int id) async {
@@ -77,10 +83,11 @@ class MovieDetailNotifier extends ChangeNotifier {
   }
 
   String _watchlistMessage = '';
+
   String get watchlistMessage => _watchlistMessage;
 
   Future<void> addWatchlist(MovieDetail movie) async {
-    final result = await saveWatchlist.execute(movie);
+    final result = await saveMovieWatchlist.execute(movie);
 
     await result.fold(
       (failure) async {
@@ -95,7 +102,7 @@ class MovieDetailNotifier extends ChangeNotifier {
   }
 
   Future<void> removeFromWatchlist(MovieDetail movie) async {
-    final result = await removeWatchlist.execute(movie);
+    final result = await removeMovieWatchlist.execute(movie);
 
     await result.fold(
       (failure) async {
@@ -110,7 +117,7 @@ class MovieDetailNotifier extends ChangeNotifier {
   }
 
   Future<void> loadWatchlistStatus(int id) async {
-    final result = await getWatchListStatus.execute(id);
+    final result = await getWatchListMovieStatus.execute(id);
     _isAddedtoWatchlist = result;
     notifyListeners();
   }

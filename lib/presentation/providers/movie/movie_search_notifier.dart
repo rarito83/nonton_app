@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/domain/usecases/search_movies.dart';
+import 'package:nonton_app/domain/usecases/movie/search_movies.dart';
 
 class MovieSearchNotifier extends ChangeNotifier {
   final SearchMovies searchMovies;
@@ -9,12 +9,15 @@ class MovieSearchNotifier extends ChangeNotifier {
   MovieSearchNotifier({required this.searchMovies});
 
   RequestState _state = RequestState.empty;
+
   RequestState get state => _state;
 
   List<Movie> _searchResult = [];
+
   List<Movie> get searchResult => _searchResult;
 
   String _message = '';
+
   String get message => _message;
 
   Future<void> fetchMovieSearch(String query) async {

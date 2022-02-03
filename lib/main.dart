@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/utils.dart';
 import 'package:nonton_app/presentation/pages/about_page.dart';
-import 'package:nonton_app/presentation/pages/home_movie_page.dart';
-import 'package:nonton_app/presentation/pages/movie_detail_page.dart';
-import 'package:nonton_app/presentation/pages/popular_movies_page.dart';
-import 'package:nonton_app/presentation/pages/search_page.dart';
-import 'package:nonton_app/presentation/pages/top_rated_movies_page.dart';
-import 'package:nonton_app/presentation/pages/watchlist_movies_page.dart';
-import 'package:nonton_app/presentation/providers/movie_detail_notifier.dart';
-import 'package:nonton_app/presentation/providers/movie_list_notifier.dart';
-import 'package:nonton_app/presentation/providers/movie_search_notifier.dart';
-import 'package:nonton_app/presentation/providers/popular_movies_notifier.dart';
-import 'package:nonton_app/presentation/providers/top_rated_movies_notifier.dart';
-import 'package:nonton_app/presentation/providers/watchlist_movies_notifier.dart';
+import 'package:nonton_app/presentation/pages/movie/home_movie_page.dart';
+import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
+import 'package:nonton_app/presentation/pages/movie/popular_movies_page.dart';
+import 'package:nonton_app/presentation/pages/movie/search_page.dart';
+import 'package:nonton_app/presentation/pages/movie/top_rated_movies_page.dart';
+import 'package:nonton_app/presentation/pages/movie/watchlist_movies_page.dart';
+import 'package:nonton_app/presentation/providers/movie/movie_detail_notifier.dart';
+import 'package:nonton_app/presentation/providers/movie/movie_list_notifier.dart';
+import 'package:nonton_app/presentation/providers/movie/movie_search_notifier.dart';
+import 'package:nonton_app/presentation/providers/movie/popular_movies_notifier.dart';
+import 'package:nonton_app/presentation/providers/movie/top_rated_movies_notifier.dart';
+import 'package:nonton_app/presentation/providers/movie/watchlist_movies_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:nonton_app/injection.dart' as di;
 
@@ -52,7 +52,6 @@ class NontonApp extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           colorScheme: kColorScheme,
           primaryColor: kRichBlack,
-          accentColor: kMikadoYellow,
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/domain/usecases/get_watchlist_movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_watchlist_movies.dart';
 
 class WatchlistMovieNotifier extends ChangeNotifier {
   var _watchlistMovies = <Movie>[];

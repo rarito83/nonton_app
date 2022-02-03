@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/domain/usecases/get_popular.movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_top_rated_movies.dart';
 
-class PopularMoviesNotifier extends ChangeNotifier {
-  final GetPopularMovies getPopularMovies;
+class TopRatedMoviesNotifier extends ChangeNotifier {
+  final GetTopRatedMovies getTopRatedMovies;
 
-  PopularMoviesNotifier(this.getPopularMovies);
+  TopRatedMoviesNotifier({required this.getTopRatedMovies});
 
   RequestState _state = RequestState.empty;
   RequestState get state => _state;
@@ -17,11 +17,11 @@ class PopularMoviesNotifier extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
-  Future<void> fetchPopularMovies() async {
+  Future<void> fetchTopRatedMovies() async {
     _state = RequestState.loading;
     notifyListeners();
 
-    final result = await getPopularMovies.execute();
+    final result = await getTopRatedMovies.execute();
 
     result.fold(
       (failure) {

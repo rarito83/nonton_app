@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/domain/usecases/get_now_playing_movies.dart';
-import 'package:nonton_app/domain/usecases/get_popular.movies.dart';
-import 'package:nonton_app/domain/usecases/get_top_rated_movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_now_playing_movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_popular.movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_top_rated_movies.dart';
 
 class MovieListNotifier extends ChangeNotifier {
   var _nowPlayingMovies = <Movie>[];
+
   List<Movie> get nowPlayingMovies => _nowPlayingMovies;
 
   RequestState _nowPlayingState = RequestState.empty;
+
   RequestState get nowPlayingState => _nowPlayingState;
 
   var _popularMovies = <Movie>[];
+
   List<Movie> get popularMovies => _popularMovies;
 
   RequestState _popularMoviesState = RequestState.empty;
+
   RequestState get popularMoviesState => _popularMoviesState;
 
   var _topRatedMovies = <Movie>[];
+
   List<Movie> get topRatedMovies => _topRatedMovies;
 
   RequestState _topRatedMoviesState = RequestState.empty;
+
   RequestState get topRatedMoviesState => _topRatedMoviesState;
 
   String _message = '';
+
   String get message => _message;
 
   MovieListNotifier({
