@@ -128,10 +128,10 @@ class DetailContent extends StatelessWidget {
 
                                 if (message ==
                                         MovieDetailNotifier
-                                            .watchlistAddSuccessMessage ||
+                                            .watchlistAddMovieSuccessMessage ||
                                     message ==
                                         MovieDetailNotifier
-                                            .watchlistRemoveSuccessMessage) {
+                                            .watchlistRemoveMovieSuccessMessage) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(message)));
                                 } else {

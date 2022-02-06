@@ -1,22 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
+import 'package:nonton_app/common/drawer_item_enum.dart';
 import 'package:nonton_app/common/utils.dart';
+import 'package:nonton_app/injection.dart' as di;
 import 'package:nonton_app/presentation/pages/about_page.dart';
+import 'package:nonton_app/presentation/pages/home_page.dart';
 import 'package:nonton_app/presentation/pages/movie/home_movie_page.dart';
 import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
 import 'package:nonton_app/presentation/pages/movie/popular_movies_page.dart';
-import 'package:nonton_app/presentation/pages/movie/search_page.dart';
+import 'package:nonton_app/presentation/pages/search_page.dart';
 import 'package:nonton_app/presentation/pages/movie/top_rated_movies_page.dart';
 import 'package:nonton_app/presentation/pages/movie/watchlist_movies_page.dart';
+import 'package:nonton_app/presentation/pages/tvshow/home_tv_show_page.dart';
+import 'package:nonton_app/presentation/pages/tvshow/popular_tv_shows_page.dart';
+import 'package:nonton_app/presentation/pages/tvshow/top_rated_tv_shows_page.dart';
+import 'package:nonton_app/presentation/pages/tvshow/tv_show_detail_page.dart';
+import 'package:nonton_app/presentation/pages/tvshow/watchlist_tv_show_page.dart';
+import 'package:nonton_app/presentation/providers/home_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/movie_detail_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/movie_list_notifier.dart';
-import 'package:nonton_app/presentation/providers/movie/movie_search_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/popular_movies_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/top_rated_movies_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/watchlist_movies_notifier.dart';
+import 'package:nonton_app/presentation/providers/search_notifier.dart';
+import 'package:nonton_app/presentation/providers/tvshow/popular_tv_shows_notifier.dart';
+import 'package:nonton_app/presentation/providers/tvshow/top_rated_tv_shows_notifier.dart';
+import 'package:nonton_app/presentation/providers/tvshow/tv_show_detail_notifier.dart';
+import 'package:nonton_app/presentation/providers/tvshow/tv_show_list_notifier.dart';
+import 'package:nonton_app/presentation/providers/tvshow/watchlist_tv_shows_notifier.dart';
 import 'package:provider/provider.dart';
-import 'package:nonton_app/injection.dart' as di;
 
 void main() {
   di.init();
@@ -29,13 +42,16 @@ class NontonApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => di.locator<HomeNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<SearchNotifier>(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => di.locator<MovieListNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
@@ -46,6 +62,21 @@ class NontonApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvShowListNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvShowDetailNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TopRatedTvShowsNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<PopularTvShowNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<WatchlistTvShowsNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -55,11 +86,13 @@ class NontonApp extends StatelessWidget {
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
-        home: HomeMoviePage(),
+        home: HomePage(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case '/home':
+            case HomePage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => HomePage());
+            case HomeMoviePage.routeName:
               return MaterialPageRoute(builder: (_) => HomeMoviePage());
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
@@ -71,20 +104,39 @@ class NontonApp extends StatelessWidget {
                 builder: (_) => MovieDetailPage(id: id),
                 settings: settings,
               );
-            case SearchPage.ROUTE_NAME:
-              return CupertinoPageRoute(builder: (_) => SearchPage());
             case WatchlistMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => WatchlistMoviesPage());
+            case HomeTvShowPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => HomeTvShowPage());
+            case PopularTvShowsPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => PopularTvShowsPage());
+            case TopRatedTvShowsPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => TopRatedTvShowsPage());
+            case TvShowDetailPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                builder: (_) => TvShowDetailPage(id: id),
+                settings: settings,
+              );
+            case WatchlistTvShowPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => WatchlistTvShowPage());
+            case SearchPage.ROUTE_NAME:
+              final drawerItem = settings.arguments as DrawerItem;
+              return MaterialPageRoute(
+                builder: (_) => SearchPage(drawerItem: drawerItem),
+              );
             case AboutPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => AboutPage());
             default:
-              return MaterialPageRoute(builder: (_) {
-                return const Scaffold(
-                  body: Center(
-                    child: Text('Page not found :('),
-                  ),
-                );
-              });
+              return MaterialPageRoute(
+                builder: (_) {
+                  return const Scaffold(
+                    body: Center(
+                      child: Text('Page not found :('),
+                    ),
+                  );
+                },
+              );
           }
         },
       ),

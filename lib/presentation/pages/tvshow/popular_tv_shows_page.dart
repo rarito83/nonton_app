@@ -5,7 +5,7 @@ import 'package:nonton_app/presentation/widgets/tv_show_card.dart';
 import 'package:provider/provider.dart';
 
 class PopularTvShowsPage extends StatefulWidget {
-  static const ROUTE_NAME = '/popular-tvShow';
+  static const ROUTE_NAME = '/popular-tvshow';
 
   @override
   _PopularTvShowsPageState createState() => _PopularTvShowsPageState();

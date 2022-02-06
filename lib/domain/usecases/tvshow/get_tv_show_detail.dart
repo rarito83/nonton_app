@@ -6,9 +6,7 @@ import 'package:nonton_app/domain/repositories/tv_show_repository.dart';
 class GetTvShowDetail {
   final TvShowRepository repository;
 
-  GetTvShowDetail({
-    required this.repository,
-  });
+  GetTvShowDetail(this.repository);
 
   Future<Either<Failure, TvShowDetail>> execute(int id) {
     return repository.getTvShowDetail(id);

@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
-import 'package:nonton_app/presentation/pages/about_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/popular_tv_shows_page.dart';
-import 'package:nonton_app/presentation/pages/tvshow/search_tv_shows_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/top_rated_tv_shows_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/tv_show_detail_page.dart';
-import 'package:nonton_app/presentation/pages/tvshow/watchlist_tv_show_page.dart';
 import 'package:nonton_app/presentation/providers/tvshow/tv_show_list_notifier.dart';
 import 'package:provider/provider.dart';
 
 class HomeTvShowPage extends StatefulWidget {
-  const HomeTvShowPage({Key? key}) : super(key: key);
+  static const ROUTE_NAME = '/home-tvshow';
 
   @override
   _HomeTvShowPageState createState() => _HomeTvShowPageState();
@@ -24,7 +21,7 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
   void initState() {
     super.initState();
     Future.microtask(
-            () => Provider.of<TvShowListNotifier>(context, listen: false)
+        () => Provider.of<TvShowListNotifier>(context, listen: false)
           ..fetchNowPlayingTvShows()
           ..fetchPopularTvShows()
           ..fetchTopRatedTvShows());
@@ -32,110 +29,63 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/circle-g.png'),
-              ),
-              accountName: Text('Ditonton'),
-              accountEmail: Text('ditonton@dicoding.com'),
+            Text(
+              'Now Playing',
+              style: kHeading6,
             ),
-            ListTile(
-              leading: Icon(Icons.tv),
-              title: Text('TvShows'),
-              onTap: () {
-                Navigator.pop(context);
-              },
+            Consumer<TvShowListNotifier>(builder: (context, data, child) {
+              final state = data.nowPlayingTvShowState;
+              if (state == RequestState.loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state == RequestState.loaded) {
+                return TvShowList(data.nowPlayingTvShows);
+              } else {
+                return Text(FAILED_TO_FETCH_DATA_MESSAGE);
+              }
+            }),
+            _buildSubHeading(
+              title: 'Popular',
+              onTap: () =>
+                  Navigator.pushNamed(context, PopularTvShowsPage.ROUTE_NAME),
             ),
-            ListTile(
-              leading: Icon(Icons.save_alt),
-              title: Text('Watchlist'),
-              onTap: () {
-                Navigator.pushNamed(context, WatchlistTvShowPage.ROUTE_NAME);
-              },
+            Consumer<TvShowListNotifier>(builder: (context, data, child) {
+              final state = data.popularTvShowState;
+              if (state == RequestState.loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state == RequestState.loaded) {
+                return TvShowList(data.popularTvShows);
+              } else {
+                return Text(FAILED_TO_FETCH_DATA_MESSAGE);
+              }
+            }),
+            _buildSubHeading(
+              title: 'Top Rated',
+              onTap: () =>
+                  Navigator.pushNamed(context, TopRatedTvShowsPage.ROUTE_NAME),
             ),
-            ListTile(
-              onTap: () {
-                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
-              },
-              leading: Icon(Icons.info_outline),
-              title: Text('About'),
-            ),
+            Consumer<TvShowListNotifier>(builder: (context, data, child) {
+              final state = data.topRatedTvShowsState;
+              if (state == RequestState.loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state == RequestState.loaded) {
+                return TvShowList(data.topRatedTvShows);
+              } else {
+                return Text(FAILED_TO_FETCH_DATA_MESSAGE);
+              }
+            }),
           ],
-        ),
-      ),
-      appBar: AppBar(
-        title: Text('Nonton'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, SearchTvShowsPage.ROUTE_NAME);
-            },
-            icon: Icon(Icons.search),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Now Playing',
-                style: kHeading6,
-              ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingTvShowState;
-                if (state == RequestState.loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return TvShowList(data.nowPlayingTvShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
-                title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularTvShowsPage.ROUTE_NAME),
-              ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvShowState;
-                if (state == RequestState.loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return TvShowList(data.popularTvShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
-                title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedTvShowsPage.ROUTE_NAME),
-              ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvShowsState;
-                if (state == RequestState.loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.loaded) {
-                  return TvShowList(data.topRatedTvShows);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-            ],
-          ),
         ),
       ),
     );
@@ -204,4 +154,3 @@ class TvShowList extends StatelessWidget {
     );
   }
 }
-

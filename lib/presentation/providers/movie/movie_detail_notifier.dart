@@ -10,8 +10,8 @@ import 'package:nonton_app/domain/usecases/movie/remove_movie_watchlist.dart';
 import 'package:nonton_app/domain/usecases/movie/save_movie_watchlist.dart';
 
 class MovieDetailNotifier extends ChangeNotifier {
-  static const watchlistAddSuccessMessage = 'Added to Watchlist';
-  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
+  static const watchlistAddMovieSuccessMessage = 'Added Movie to Watchlist';
+  static const watchlistRemoveMovieSuccessMessage = 'Removed Movie from Watchlist';
 
   final GetMovieDetail getMovieDetail;
   final GetMovieRecommendations getMovieRecommendations;

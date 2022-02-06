@@ -3,7 +3,8 @@ import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/drawer_item_enum.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/presentation/providers/search_notifier.dart';
-import 'package:nonton_app/presentation/widgets/movie_card_list.dart';
+import 'package:nonton_app/presentation/widgets/card_movie_search.dart';
+import 'package:nonton_app/presentation/widgets/card_tv_show_search.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage extends StatelessWidget {
@@ -37,7 +38,7 @@ class SearchPage extends StatelessWidget {
                 Provider.of<SearchNotifier>(context, listen: false)
                     .fetchMovieSearch(query);
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search title',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
@@ -49,34 +50,25 @@ class SearchPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<SearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (data.state == RequestState.loaded) {
-                  final result = data.searchResult;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return MovieCard(movie);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: Container(),
-                  );
-                }
-              },
-            ),
+            _buildSearch(),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildSearch() {
+    return Consumer<SearchNotifier>(builder: (context, data, child) {
+      if (data.state == RequestState.loading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (data.state == RequestState.loaded && _isAlreadySearched) {
+        drawerItem == DrawerItem.Movie
+            ? CardMovieSearch(data.searchMovieResult)
+            : CardTvShowSearch(data.searchTvShowsResult);
+      }
+      return Container();
+    });
   }
 }
