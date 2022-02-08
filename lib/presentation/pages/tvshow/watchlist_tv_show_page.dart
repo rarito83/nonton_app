@@ -36,9 +36,6 @@ class _WatchlistTvShowPageState extends State<WatchlistTvShowPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Watchlist'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<WatchlistTvShowsNotifier>(

@@ -4,18 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/presentation/pages/about_page.dart';
 import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
 import 'package:nonton_app/presentation/pages/movie/popular_movies_page.dart';
-import 'package:nonton_app/presentation/pages/search_page.dart';
 import 'package:nonton_app/presentation/pages/movie/top_rated_movies_page.dart';
-import 'package:nonton_app/presentation/pages/movie/watchlist_movies_page.dart';
-import 'package:nonton_app/presentation/pages/tvshow/home_tv_show_page.dart';
 import 'package:nonton_app/presentation/providers/movie/movie_list_notifier.dart';
 import 'package:provider/provider.dart';
 
 class HomeMoviePage extends StatefulWidget {
-  static const routeName = '/home_movie';
+  static const ROUTE_NAME = '/home_movie';
   @override
   _HomeMoviePageState createState() => _HomeMoviePageState();
 }
@@ -46,13 +42,13 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             Consumer<MovieListNotifier>(builder: (context, data, child) {
               final state = data.nowPlayingState;
               if (state == RequestState.loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.loaded) {
                 return MovieList(data.nowPlayingMovies);
               } else {
-                return Text('Failed');
+                return const Text(FAILED_TO_FETCH_DATA_MESSAGE);
               }
             }),
             _buildSubHeading(
@@ -63,13 +59,13 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             Consumer<MovieListNotifier>(builder: (context, data, child) {
               final state = data.popularMoviesState;
               if (state == RequestState.loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.loaded) {
                 return MovieList(data.popularMovies);
               } else {
-                return Text('Failed');
+                return const Text(FAILED_TO_FETCH_DATA_MESSAGE);
               }
             }),
             _buildSubHeading(
@@ -80,13 +76,13 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             Consumer<MovieListNotifier>(builder: (context, data, child) {
               final state = data.topRatedMoviesState;
               if (state == RequestState.loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.loaded) {
                 return MovieList(data.topRatedMovies);
               } else {
-                return Text('Failed');
+                return const Text(FAILED_TO_FETCH_DATA_MESSAGE);
               }
             }),
           ],
@@ -108,7 +104,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -141,13 +137,13 @@ class MovieList extends StatelessWidget {
                 );
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

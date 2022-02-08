@@ -31,9 +31,9 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, DrawerItem seletedDrawerItem) {
-    if (seletedDrawerItem == DrawerItem.Movie) {
+    if (seletedDrawerItem == DrawerItem.movie) {
       return HomeMoviePage();
-    } else if (seletedDrawerItem == DrawerItem.TVShow) {
+    } else if (seletedDrawerItem == DrawerItem.tvShow) {
       return HomeTvShowPage();
     }
     return Container();
@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
     DrawerItem activeDrawerItem,
   ) =>
       AppBar(
-        title: Text('Ditonton'),
+        title: const Text('Nonton'),
         actions: [
           IconButton(
             onPressed: () {
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                 arguments: activeDrawerItem,
               );
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           )
         ],
       );
@@ -67,36 +67,36 @@ class HomePage extends StatelessWidget {
       Drawer(
         child: Column(
           children: [
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/circle-g.png'),
               ),
-              accountName: Text('Ditonton'),
+              accountName: Text('Nonton'),
               accountEmail: Text('ditonton@dicoding.com'),
             ),
             ListTile(
               tileColor:
-                  activeDrawerItem == DrawerItem.Movie ? kDavysGrey : kGrey,
-              leading: Icon(Icons.movie_creation_outlined),
-              title: Text('Movies'),
+                  activeDrawerItem == DrawerItem.movie ? kDavysGrey : kGrey,
+              leading: const Icon(Icons.movie_creation_outlined),
+              title: const Text('Movies'),
               onTap: () {
                 Navigator.pop(context);
-                itemCallback(DrawerItem.Movie);
+                itemCallback(DrawerItem.movie);
               },
             ),
             ListTile(
               tileColor:
-                  activeDrawerItem == DrawerItem.TVShow ? kDavysGrey : kGrey,
-              leading: Icon(Icons.live_tv_rounded),
-              title: Text('TV Shows'),
+                  activeDrawerItem == DrawerItem.tvShow ? kDavysGrey : kGrey,
+              leading: const Icon(Icons.live_tv_rounded),
+              title: const Text('Tv Shows'),
               onTap: () {
                 Navigator.pop(context);
-                itemCallback(DrawerItem.TVShow);
+                itemCallback(DrawerItem.tvShow);
               },
             ),
             ListTile(
-              leading: Icon(Icons.save_alt),
-              title: Text('Watchlist'),
+              leading: const Icon(Icons.save_alt),
+              title: const Text('Watchlist'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
@@ -107,8 +107,8 @@ class HomePage extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
               },
-              leading: Icon(Icons.info_outline),
-              title: Text('About'),
+              leading: const Icon(Icons.info_outline),
+              title: const Text('About'),
             ),
           ],
         ),

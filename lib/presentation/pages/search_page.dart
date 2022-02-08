@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/drawer_item_enum.dart';
 import 'package:nonton_app/common/state_enum.dart';
+import 'package:nonton_app/domain/entities/movie.dart';
+import 'package:nonton_app/domain/entities/tv_show.dart';
+import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
 import 'package:nonton_app/presentation/providers/search_notifier.dart';
-import 'package:nonton_app/presentation/widgets/card_movie_search.dart';
-import 'package:nonton_app/presentation/widgets/card_tv_show_search.dart';
+import 'package:nonton_app/presentation/widgets/card_search_content.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage extends StatelessWidget {
@@ -15,18 +17,18 @@ class SearchPage extends StatelessWidget {
     required this.drawerItem,
   }) : super(key: key);
 
-  final DrawerItem drawerItem;
-  late bool _isAlreadySearched = false;
+  late DrawerItem drawerItem;
+  late bool _isSearched = false;
   late String _title;
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SearchNotifier>(context);
-    _title = drawerItem == DrawerItem.Movie ? "Movie" : "TV Show";
+    _title = drawerItem == DrawerItem.movie ? "Movie" : "Tv Show";
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: Text('Search $_title'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,8 +37,10 @@ class SearchPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<SearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                _isSearched = true;
+                drawerItem == DrawerItem.movie
+                    ? provider.fetchMovieSearch(query)
+                    : provider.fetchTvShowSearch(query);
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -45,7 +49,7 @@ class SearchPage extends StatelessWidget {
               ),
               textInputAction: TextInputAction.search,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Search Result',
               style: kHeading6,
@@ -63,12 +67,62 @@ class SearchPage extends StatelessWidget {
         return const Center(
           child: CircularProgressIndicator(),
         );
-      } else if (data.state == RequestState.loaded && _isAlreadySearched) {
-        drawerItem == DrawerItem.Movie
-            ? CardMovieSearch(data.searchMovieResult)
-            : CardTvShowSearch(data.searchTvShowsResult);
+      } else if (data.state == RequestState.loaded && _isSearched) {
+        drawerItem == DrawerItem.movie
+            ? _cardMovieSearch(data.searchMovieResult)
+            : _cardTvShowSearch(data.searchTvShowsResult);
       }
       return Container();
     });
+  }
+
+  Widget _cardMovieSearch(List<Movie> movies) {
+    if (movies.isEmpty) return _errorMessage();
+
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemBuilder: (context, index) {
+          final movie = movies[index];
+          return CardSearchContent(
+            movie: movie,
+            drawerItem: drawerItem,
+            routeName: MovieDetailPage.ROUTE_NAME,
+          );
+        },
+        itemCount: movies.length,
+      ),
+    );
+  }
+
+  Widget _cardTvShowSearch(List<TvShow> tvShows) {
+    if (tvShows.isEmpty) return _errorMessage();
+
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemBuilder: (context, index) {
+          final tv = tvShows[index];
+          return CardSearchContent(
+            tvShow: tv,
+            drawerItem: drawerItem,
+            routeName: MovieDetailPage.ROUTE_NAME,
+          );
+        },
+        itemCount: tvShows.length,
+      ),
+    );
+  }
+
+  Widget _errorMessage() {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Center(
+        child: Text(
+          '$_title not found ;(',
+          style: kBodyText,
+        ),
+      ),
+    );
   }
 }

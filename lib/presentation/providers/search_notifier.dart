@@ -68,10 +68,10 @@ class SearchNotifier extends ChangeNotifier {
     );
   }
 
-  // void resetSearch() {
-  //   _state = RequestState.empty;
-  //   _searchMoviesResult = [];
-  //   _searchTvShowsResult = [];
-  //   notifyListeners();
-  // }
+  void resetSearch() {
+    _state = RequestState.empty;
+    _searchMoviesResult = [];
+    _searchTvShowsResult = [];
+    notifyListeners();
+  }
 }

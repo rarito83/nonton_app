@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
@@ -39,7 +38,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       body: Consumer<MovieDetailNotifier>(
         builder: (context, provider, child) {
           if (provider.movieState == RequestState.loading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (provider.movieState == RequestState.loaded) {
@@ -75,7 +74,7 @@ class DetailContent extends StatelessWidget {
         CachedNetworkImage(
           imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
           width: screenWidth,
-          placeholder: (context, url) => Center(
+          placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
           errorWidget: (context, url, error) => Icon(Icons.error),
@@ -85,7 +84,7 @@ class DetailContent extends StatelessWidget {
           child: DraggableScrollableSheet(
             builder: (context, scrollController) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kRichBlack,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
@@ -165,7 +164,7 @@ class DetailContent extends StatelessWidget {
                                 RatingBarIndicator(
                                   rating: movie.voteAverage / 2,
                                   itemCount: 5,
-                                  itemBuilder: (context, index) => Icon(
+                                  itemBuilder: (context, index) => const Icon(
                                     Icons.star,
                                     color: kMikadoYellow,
                                   ),
@@ -174,7 +173,7 @@ class DetailContent extends StatelessWidget {
                                 Text('${movie.voteAverage}')
                               ],
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Overview',
                               style: kHeading6,
@@ -182,7 +181,7 @@ class DetailContent extends StatelessWidget {
                             Text(
                               movie.overview,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Recommendations',
                               style: kHeading6,
@@ -191,7 +190,7 @@ class DetailContent extends StatelessWidget {
                               builder: (context, data, child) {
                                 if (data.recommendationState ==
                                     RequestState.loading) {
-                                  return Center(
+                                  return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (data.recommendationState ==
@@ -216,20 +215,21 @@ class DetailContent extends StatelessWidget {
                                               );
                                             },
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
+                                              borderRadius:
+                                                  const BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
                                                     'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                                                 placeholder: (context, url) =>
-                                                    Center(
+                                                    const Center(
                                                   child:
                                                       CircularProgressIndicator(),
                                                 ),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                        const Icon(Icons.error),
                                               ),
                                             ),
                                           ),
@@ -270,7 +270,7 @@ class DetailContent extends StatelessWidget {
             backgroundColor: kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },

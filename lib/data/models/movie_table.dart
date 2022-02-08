@@ -38,12 +38,16 @@ class MovieTable extends Equatable {
 
   Movie toEntity() => Movie.watchlist(
         id: id,
+        title: title,
         overview: overview,
         posterPath: posterPath,
-        title: title,
       );
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [id, title, posterPath, overview];
+  List<Object?> get props => [
+        id,
+        title,
+        posterPath,
+        overview,
+      ];
 }

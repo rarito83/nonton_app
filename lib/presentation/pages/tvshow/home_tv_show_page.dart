@@ -42,13 +42,13 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
             Consumer<TvShowListNotifier>(builder: (context, data, child) {
               final state = data.nowPlayingTvShowState;
               if (state == RequestState.loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.loaded) {
                 return TvShowList(data.nowPlayingTvShows);
               } else {
-                return Text(FAILED_TO_FETCH_DATA_MESSAGE);
+                return const Text(FAILED_TO_FETCH_DATA_MESSAGE);
               }
             }),
             _buildSubHeading(
@@ -59,13 +59,13 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
             Consumer<TvShowListNotifier>(builder: (context, data, child) {
               final state = data.popularTvShowState;
               if (state == RequestState.loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.loaded) {
                 return TvShowList(data.popularTvShows);
               } else {
-                return Text(FAILED_TO_FETCH_DATA_MESSAGE);
+                return const Text(FAILED_TO_FETCH_DATA_MESSAGE);
               }
             }),
             _buildSubHeading(
@@ -76,13 +76,13 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
             Consumer<TvShowListNotifier>(builder: (context, data, child) {
               final state = data.topRatedTvShowsState;
               if (state == RequestState.loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.loaded) {
                 return TvShowList(data.topRatedTvShows);
               } else {
-                return Text(FAILED_TO_FETCH_DATA_MESSAGE);
+                return const Text(FAILED_TO_FETCH_DATA_MESSAGE);
               }
             }),
           ],
@@ -104,7 +104,7 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -140,10 +140,10 @@ class TvShowList extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

@@ -6,17 +6,14 @@ import 'package:nonton_app/common/utils.dart';
 import 'package:nonton_app/injection.dart' as di;
 import 'package:nonton_app/presentation/pages/about_page.dart';
 import 'package:nonton_app/presentation/pages/home_page.dart';
-import 'package:nonton_app/presentation/pages/movie/home_movie_page.dart';
 import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
 import 'package:nonton_app/presentation/pages/movie/popular_movies_page.dart';
-import 'package:nonton_app/presentation/pages/search_page.dart';
 import 'package:nonton_app/presentation/pages/movie/top_rated_movies_page.dart';
-import 'package:nonton_app/presentation/pages/movie/watchlist_movies_page.dart';
-import 'package:nonton_app/presentation/pages/tvshow/home_tv_show_page.dart';
+import 'package:nonton_app/presentation/pages/search_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/popular_tv_shows_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/top_rated_tv_shows_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/tv_show_detail_page.dart';
-import 'package:nonton_app/presentation/pages/tvshow/watchlist_tv_show_page.dart';
+import 'package:nonton_app/presentation/pages/watchlist_page.dart';
 import 'package:nonton_app/presentation/providers/home_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/movie_detail_notifier.dart';
 import 'package:nonton_app/presentation/providers/movie/movie_list_notifier.dart';
@@ -86,14 +83,13 @@ class NontonApp extends StatelessWidget {
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
+        debugShowCheckedModeBanner: false,
         home: HomePage(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case HomePage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => HomePage());
-            case HomeMoviePage.routeName:
-              return MaterialPageRoute(builder: (_) => HomeMoviePage());
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
             case TopRatedMoviesPage.ROUTE_NAME:
@@ -104,10 +100,8 @@ class NontonApp extends StatelessWidget {
                 builder: (_) => MovieDetailPage(id: id),
                 settings: settings,
               );
-            case WatchlistMoviesPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => WatchlistMoviesPage());
-            case HomeTvShowPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => HomeTvShowPage());
+            case WatchlistPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => WatchlistPage());
             case PopularTvShowsPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => PopularTvShowsPage());
             case TopRatedTvShowsPage.ROUTE_NAME:
@@ -118,12 +112,12 @@ class NontonApp extends StatelessWidget {
                 builder: (_) => TvShowDetailPage(id: id),
                 settings: settings,
               );
-            case WatchlistTvShowPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => WatchlistTvShowPage());
             case SearchPage.ROUTE_NAME:
               final drawerItem = settings.arguments as DrawerItem;
               return MaterialPageRoute(
-                builder: (_) => SearchPage(drawerItem: drawerItem),
+                builder: (_) => SearchPage(
+                  drawerItem: drawerItem,
+                ),
               );
             case AboutPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => AboutPage());

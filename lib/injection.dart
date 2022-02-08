@@ -12,7 +12,7 @@ import 'package:nonton_app/domain/repositories/tv_show_repository.dart';
 import 'package:nonton_app/domain/usecases/movie/get_movie_detail.dart';
 import 'package:nonton_app/domain/usecases/movie/get_movie_recommendations.dart';
 import 'package:nonton_app/domain/usecases/movie/get_now_playing_movies.dart';
-import 'package:nonton_app/domain/usecases/movie/get_popular.movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_popular_movies.dart';
 import 'package:nonton_app/domain/usecases/movie/get_top_rated_movies.dart';
 import 'package:nonton_app/domain/usecases/movie/get_watchlist_movie_status.dart';
 import 'package:nonton_app/domain/usecases/movie/get_watchlist_movies.dart';

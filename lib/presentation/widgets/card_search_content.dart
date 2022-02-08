@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/drawer_item_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
-
-import '../../common/constants.dart';
 
 class CardSearchContent extends StatelessWidget {
   final Movie? movie;
@@ -12,7 +11,7 @@ class CardSearchContent extends StatelessWidget {
   final DrawerItem drawerItem;
   final String routeName;
 
-  const CardSearchContent({
+  CardSearchContent({
     required this.drawerItem,
     this.movie,
     this.tvShow,
@@ -92,15 +91,15 @@ class CardSearchContent extends StatelessWidget {
   }
 
   int _getId() =>
-      drawerItem == DrawerItem.Movie ? movie?.id as int : tvShow?.id as int;
+      drawerItem == DrawerItem.movie ? movie?.id as int : tvShow?.id as int;
 
   String? _getTitle() =>
-      drawerItem == DrawerItem.Movie ? movie?.title : tvShow?.name;
+      drawerItem == DrawerItem.movie ? movie?.title : tvShow?.name;
 
-  String _getPosterPath() => drawerItem == DrawerItem.Movie
+  String _getPosterPath() => drawerItem == DrawerItem.movie
       ? movie?.posterPath as String
       : tvShow?.posterPath as String;
 
   String? _getOverview() =>
-      drawerItem == DrawerItem.Movie ? movie?.overview : tvShow?.overview;
+      drawerItem == DrawerItem.movie ? movie?.overview : tvShow?.overview;
 }

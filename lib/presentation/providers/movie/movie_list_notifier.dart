@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
 import 'package:nonton_app/domain/usecases/movie/get_now_playing_movies.dart';
-import 'package:nonton_app/domain/usecases/movie/get_popular.movies.dart';
+import 'package:nonton_app/domain/usecases/movie/get_popular_movies.dart';
 import 'package:nonton_app/domain/usecases/movie/get_top_rated_movies.dart';
 
 class MovieListNotifier extends ChangeNotifier {

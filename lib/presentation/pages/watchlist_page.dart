@@ -17,14 +17,14 @@ class WatchlistPage extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: Text('Watchlist'),
+              title: const Text('Watchlist'),
               pinned: true,
               floating: true,
               bottom: TabBar(
                 indicatorColor: kMikadoYellow,
                 tabs: [
                   _buildTabBarItem('Movies', Icons.movie_creation_outlined),
-                  _buildTabBarItem('TV Show', Icons.live_tv_rounded),
+                  _buildTabBarItem('Tv Shows', Icons.live_tv_rounded),
                 ],
               ),
             ),

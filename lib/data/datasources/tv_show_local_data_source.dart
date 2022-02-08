@@ -1,3 +1,4 @@
+import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/exception.dart';
 import 'package:nonton_app/data/datasources/db/database_helper.dart';
 import 'package:nonton_app/data/models/tv_show_table.dart';
@@ -21,7 +22,7 @@ class TvShowLocalDataSourceImpl with TvShowLocalDataSource {
   Future<String> insertTvShowWatchlist(TvShowTable tvShowTable) async {
     try {
       await databaseHelper.insertTvShowWatchlist(tvShowTable);
-      return "Added Tv Show to Watchlist";
+      return WATCHLIST_ADD_SUCCESS_MESSAGE;
     } catch (e) {
       throw DatabaseException(e.toString());
     }
@@ -31,7 +32,7 @@ class TvShowLocalDataSourceImpl with TvShowLocalDataSource {
   Future<String> removeTvShowWatchlist(TvShowTable tvShowTable) async {
     try {
       await databaseHelper.removeTvShowWatchlist(tvShowTable);
-      return "Removed Tv Show to Watchlist";
+      return WATCHLIST_REMOVE_SUCCESS_MESSAGE;
     } catch (e) {
       throw DatabaseException(e.toString());
     }
@@ -42,8 +43,6 @@ class TvShowLocalDataSourceImpl with TvShowLocalDataSource {
     final result = await databaseHelper.getTvShowById(id);
     if (result != null) {
       return TvShowTable.fromMap(result);
-    } else {
-      return null;
     }
   }
 

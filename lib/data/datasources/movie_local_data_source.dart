@@ -1,3 +1,4 @@
+import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/exception.dart';
 import 'package:nonton_app/data/datasources/db/database_helper.dart';
 import 'package:nonton_app/data/models/movie_table.dart';
@@ -21,7 +22,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   Future<String> insertMovieWatchlist(MovieTable movie) async {
     try {
       await databaseHelper.insertMovieWatchlist(movie);
-      return 'Added to Watchlist';
+      return WATCHLIST_ADD_SUCCESS_MESSAGE;
     } catch (e) {
       throw DatabaseException(e.toString());
     }
@@ -31,7 +32,7 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   Future<String> removeMovieWatchlist(MovieTable movie) async {
     try {
       await databaseHelper.removeMovieWatchlist(movie);
-      return 'Removed from Watchlist';
+      return WATCHLIST_REMOVE_SUCCESS_MESSAGE;
     } catch (e) {
       throw DatabaseException(e.toString());
     }
@@ -42,8 +43,6 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
     final result = await databaseHelper.getMovieById(id);
     if (result != null) {
       return MovieTable.fromMap(result);
-    } else {
-      return null;
     }
   }
 
