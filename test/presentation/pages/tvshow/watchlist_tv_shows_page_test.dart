@@ -48,7 +48,7 @@ void main() {
 
       await tester.pumpWidget(_makeTestableWidget(WatchlistTvShowPage()));
 
-      expect(find.text(WACHLIST_TV_SHOW_EMPTY_MESSAGE), findsOneWidget);
+      expect(find.text(WATCHLIST_TV_SHOW_EMPTY_MESSAGE), findsOneWidget);
     });
 
     testWidgets('loading indicator should display when getting data',

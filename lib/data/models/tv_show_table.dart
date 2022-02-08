@@ -3,17 +3,17 @@ import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/domain/entities/tv_show_detail.dart';
 
 class TvShowTable extends Equatable {
-  final int id;
-  final String? name;
-  final String? posterPath;
-  final String? overview;
-
   TvShowTable({
     required this.id,
     required this.name,
     required this.posterPath,
     required this.overview,
   });
+
+  final int id;
+  final String? name;
+  final String? posterPath;
+  final String? overview;
 
   factory TvShowTable.fromEntity(TvShowDetail tvShow) => TvShowTable(
         id: tvShow.id,
@@ -22,11 +22,18 @@ class TvShowTable extends Equatable {
         overview: tvShow.overview,
       );
 
-  factory TvShowTable.fromMap(Map<String, dynamic> map) => TvShowTable(
-        id: map["id"],
-        name: map["name"],
-        posterPath: map["posterPath"],
-        overview: map["overview"],
+  factory TvShowTable.fromJson(Map<String, dynamic> json) => TvShowTable(
+        id: json["id"],
+        name: json["name"],
+        posterPath: json["posterPath"],
+        overview: json["overview"],
+      );
+
+  TvShow toEntity() => TvShow.watchlist(
+        id: id,
+        name: name,
+        overview: overview,
+        posterPath: posterPath,
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,13 +42,6 @@ class TvShowTable extends Equatable {
         'posterPath': posterPath,
         'overview': overview,
       };
-
-  TvShow toEntity() => TvShow.watchlist(
-        id: id,
-        name: name,
-        overview: overview,
-        posterPath: posterPath,
-      );
 
   @override
   List<Object?> get props => [

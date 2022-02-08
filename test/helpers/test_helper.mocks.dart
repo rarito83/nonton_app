@@ -47,7 +47,7 @@ class _FakeMovieDetailResponse extends _i1.Fake
     implements _i3.MovieDetailResponse {}
 
 class _FakeTvShowDetailModel extends _i1.Fake
-    implements _i4.TvShowDetailModel {}
+    implements _i4.TvShowDetailResponse {}
 
 class _FakeResponse extends _i1.Fake implements _i4.Response {}
 
@@ -337,11 +337,11 @@ class MockTvShowRemoteDataSource extends _i1.Mock
           Future<List<_i23.TvShowModel>>.value(<_i23.TvShowModel>[]))
       as _i7.Future<List<_i23.TvShowModel>>);
   @override
-  _i7.Future<_i4.TvShowDetailModel> getTvShowDetail(int? id) =>
+  _i7.Future<_i4.TvShowDetailResponse> getTvShowDetail(int? id) =>
       (super.noSuchMethod(Invocation.method(#getTvShowDetail, [id]),
-          returnValue: Future<_i4.TvShowDetailModel>.value(
+          returnValue: Future<_i4.TvShowDetailResponse>.value(
               _FakeTvShowDetailModel()))
-      as _i7.Future<_i4.TvShowDetailModel>);
+      as _i7.Future<_i4.TvShowDetailResponse>);
   @override
   _i7.Future<List<_i23.TvShowModel>> searchTvShows(String? query) =>
       (super.noSuchMethod(Invocation.method(#searchTvShows, [query]),

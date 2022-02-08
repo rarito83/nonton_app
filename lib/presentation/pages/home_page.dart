@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                 backgroundImage: AssetImage('assets/circle-g.png'),
               ),
               accountName: Text('Nonton'),
-              accountEmail: Text('ditonton@dicoding.com'),
+              accountEmail: Text('nonton@dicoding.com'),
             ),
             ListTile(
               tileColor:

@@ -30,6 +30,13 @@ class SearchNotifier extends ChangeNotifier {
 
   String get message => _message;
 
+  void resetSearch() {
+    _state = RequestState.empty;
+    _searchMoviesResult = [];
+    _searchTvShowsResult = [];
+    notifyListeners();
+  }
+
   Future<void> fetchMovieSearch(String query) async {
     _state = RequestState.loading;
     notifyListeners();
@@ -66,12 +73,5 @@ class SearchNotifier extends ChangeNotifier {
         notifyListeners();
       },
     );
-  }
-
-  void resetSearch() {
-    _state = RequestState.empty;
-    _searchMoviesResult = [];
-    _searchTvShowsResult = [];
-    notifyListeners();
   }
 }

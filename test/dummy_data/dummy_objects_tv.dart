@@ -16,7 +16,7 @@ final testTvShowModel = TvShowModel(
   originalLanguage: "en",
   originalName: "Rachael Ray",
   overview:
-  "Rachael Ray, also known as The Rachael Ray Show, is an American talk show starring Rachael Ray that debuted in syndication in the United States and Canada on September 18, 2006. It is filmed at Chelsea Television Studios in New York City. The show's 8th season premiered on September 9, 2013, and became the last Harpo show in syndication to switch to HD with a revamped studio. In January 2012, CBS Television Distribution announced a two-year renewal for the show, taking it through the 2013–14 season.",
+      "Rachael Ray, also known as The Rachael Ray Show, is an American talk show starring Rachael Ray that debuted in syndication in the United States and Canada on September 18, 2006. It is filmed at Chelsea Television Studios in New York City. The show's 8th season premiered on September 9, 2013, and became the last Harpo show in syndication to switch to HD with a revamped studio. In January 2012, CBS Television Distribution announced a two-year renewal for the show, taking it through the 2013–14 season.",
   popularity: 1765.863,
   posterPath: "/dsAJhCLYX1fiNRoiiJqR6Up4aJ.jpg",
   voteAverage: 5.8,
@@ -31,7 +31,7 @@ final testTvShowList = <TvShow>[testTvShow];
 
 final testTvShowResponse = TvShowResponse(tvShowList: testTvShowModelList);
 
-final testTvShowDetailResponse = TvShowDetailModel(
+final testTvShowDetailResponse = TvShowDetailResponse(
   backdropPath: '',
   firstAirDate: '',
   genres: [GenreModel(id: 1, name: 'Action')],

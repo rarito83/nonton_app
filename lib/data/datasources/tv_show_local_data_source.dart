@@ -42,13 +42,13 @@ class TvShowLocalDataSourceImpl with TvShowLocalDataSource {
   Future<TvShowTable?> getTvShowById(int id) async {
     final result = await databaseHelper.getTvShowById(id);
     if (result != null) {
-      return TvShowTable.fromMap(result);
+      return TvShowTable.fromJson(result);
     }
   }
 
   @override
   Future<List<TvShowTable>> getWatchlistTvShows() async {
     final result = await databaseHelper.getWatchlistTvShows();
-    return result.map((data) => TvShowTable.fromMap(data)).toList();
+    return result.map((data) => TvShowTable.fromJson(data)).toList();
   }
 }

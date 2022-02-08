@@ -3,7 +3,6 @@ import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/presentation/pages/tvshow/tv_show_detail_page.dart';
 import 'package:nonton_app/presentation/providers/tvshow/tv_show_detail_notifier.dart';
-import 'package:nonton_app/presentation/widgets/scrollable_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -45,7 +44,6 @@ void main() {
         expect(find.text('Overview'), findsOneWidget);
         expect(find.text('Recommendations'), findsOneWidget);
         expect(find.byType(ElevatedButton), findsOneWidget);
-        expect(find.byType(ScrollableSheet), findsOneWidget);
         expect(find.byType(ElevatedButton), findsOneWidget);
         expect(find.byType(RatingBarIndicator), findsOneWidget);
         expect(find.byType(Row), findsWidgets);
@@ -92,7 +90,7 @@ void main() {
         when(mockNotifier.recommendationState).thenReturn(RequestState.loaded);
         when(mockNotifier.tvShowRecommendations).thenReturn(<TvShow>[]);
         when(mockNotifier.isAddedToWatchlist).thenReturn(false);
-        when(mockNotifier.watchlistMessage).thenReturn(ADD_MESSAGE);
+        when(mockNotifier.watchlistMessage).thenReturn(WATCHLIST_ADD_SUCCESS_MESSAGE);
 
         final watchlistButton = find.byType(ElevatedButton);
 
@@ -104,7 +102,7 @@ void main() {
         await tester.pump();
 
         expect(find.byType(SnackBar), findsOneWidget);
-        expect(find.text(ADD_MESSAGE), findsOneWidget);
+        expect(find.text(WATCHLIST_ADD_SUCCESS_MESSAGE), findsOneWidget);
       });
 
   testWidgets(

@@ -14,11 +14,11 @@ abstract class TvShowRemoteDataSource {
 
   Future<List<TvShowModel>> getTopRatedTvShows();
 
-  Future<TvShowDetailModel> getDetailTvShow(int id);
+  Future<TvShowDetailResponse> getTvShowDetail(int id);
 
-  Future<List<TvShowModel>> getRecommendationTvShows(int id);
+  Future<List<TvShowModel>> getTvShowRecommendations(int id);
 
-  Future<List<TvShowModel>> searchTvShow(String query);
+  Future<List<TvShowModel>> searchTvShows(String query);
 }
 
 class TvShowRemoteDataSourceImpl with TvShowRemoteDataSource {
@@ -39,10 +39,10 @@ class TvShowRemoteDataSourceImpl with TvShowRemoteDataSource {
   }
 
   @override
-  Future<TvShowDetailModel> getDetailTvShow(int id) async {
+  Future<TvShowDetailResponse> getTvShowDetail(int id) async {
     final response = await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
     if (response.statusCode == 200) {
-      return TvShowDetailModel.fromJson(json.decode(response.body));
+      return TvShowDetailResponse.fromJson(json.decode(response.body));
     } else {
       throw ServerException();
     }
@@ -61,7 +61,7 @@ class TvShowRemoteDataSourceImpl with TvShowRemoteDataSource {
   }
 
   @override
-  Future<List<TvShowModel>> getRecommendationTvShows(int id) async {
+  Future<List<TvShowModel>> getTvShowRecommendations(int id) async {
     final response = await client
         .get(Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'));
 
@@ -85,7 +85,7 @@ class TvShowRemoteDataSourceImpl with TvShowRemoteDataSource {
   }
 
   @override
-  Future<List<TvShowModel>> searchTvShow(String query) async {
+  Future<List<TvShowModel>> searchTvShows(String query) async {
     final response = await client
         .get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'));
 

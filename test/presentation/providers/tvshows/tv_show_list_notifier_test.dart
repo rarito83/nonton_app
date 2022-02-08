@@ -10,9 +10,7 @@ import 'package:nonton_app/domain/usecases/tvshow/get_top_rated_tv_show.dart';
 import 'package:nonton_app/presentation/providers/tvshow/tv_show_list_notifier.dart';
 
 import '../../../dummy_data/dummy_objects_tv.dart';
-import 'popular_tv_show_notifier_test.mocks.dart';
-import 'top_rated_tv_show_notifier_test.mocks.dart';
-import 'tv_show_detail_notifier_test.mocks.dart';
+import 'tv_show_list_notifier_test.mocks.dart';
 
 @GenerateMocks([GetNowPlayingTvShows, GetPopularTvShows, GetTopRatedTvShows])
 void main() {
@@ -106,7 +104,7 @@ void main() {
       // act
       await provider.fetchPopularTvShows();
       // assert
-      expect(provider.nowPlayingTvShowState, RequestState.loaded);
+      expect(provider.popularTvShowState, RequestState.loaded);
       expect(provider.popularTvShows, testTvShowList);
       expect(listenerCallCount, 2);
     });
@@ -118,7 +116,7 @@ void main() {
       // act
       await provider.fetchPopularTvShows();
       // assert
-      expect(provider.nowPlayingTvShowState, RequestState.error);
+      expect(provider.popularTvShowState, RequestState.error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });

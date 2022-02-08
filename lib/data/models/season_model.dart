@@ -2,14 +2,15 @@ import 'package:equatable/equatable.dart';
 import 'package:nonton_app/domain/entities/season.dart';
 
 class SeasonModel extends Equatable {
-  SeasonModel(
-      {required this.airDate,
-      required this.episodeCount,
-      required this.id,
-      required this.name,
-      required this.overview,
-      required this.posterPath,
-      required this.seasonNumber});
+  SeasonModel({
+    required this.airDate,
+    required this.episodeCount,
+    required this.id,
+    required this.name,
+    required this.overview,
+    required this.posterPath,
+    required this.seasonNumber,
+  });
 
   final String? airDate;
   final int episodeCount;

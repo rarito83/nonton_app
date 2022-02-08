@@ -74,7 +74,7 @@ void main() {
     });
   });
 
-  group('TV Show test on db', () {
+  group('Tv Show test on db', () {
     test('should return tv show id when inserting new tv show', () async {
       // arrange
       when(mockDatabaseHelper.insertTvShowWatchlist(testTvShowTable))

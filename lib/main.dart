@@ -101,7 +101,7 @@ class NontonApp extends StatelessWidget {
                 settings: settings,
               );
             case WatchlistPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => WatchlistPage());
+              return MaterialPageRoute(builder: (_) => const WatchlistPage());
             case PopularTvShowsPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => PopularTvShowsPage());
             case TopRatedTvShowsPage.ROUTE_NAME:

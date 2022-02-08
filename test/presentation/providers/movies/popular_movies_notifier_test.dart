@@ -8,7 +8,7 @@ import 'package:nonton_app/domain/entities/movie.dart';
 import 'package:nonton_app/domain/usecases/movie/get_popular_movies.dart';
 import 'package:nonton_app/presentation/providers/movie/popular_movies_notifier.dart';
 
-import '../../pages/movie/popular_movies_page_test.mocks.dart';
+import 'popular_movies_notifier_test.mocks.dart';
 
 @GenerateMocks([GetPopularMovies])
 void main() {

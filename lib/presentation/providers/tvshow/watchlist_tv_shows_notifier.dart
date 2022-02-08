@@ -4,6 +4,12 @@ import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/domain/usecases/tvshow/get_watchlist_tv_shows.dart';
 
 class WatchlistTvShowsNotifier extends ChangeNotifier {
+  final GetWatchlistTvShows getWatchlistTvShows;
+
+  WatchlistTvShowsNotifier({
+    required this.getWatchlistTvShows,
+  });
+
   var _watchlistTvShows = <TvShow>[];
 
   List<TvShow> get watchlistTvShows => _watchlistTvShows;
@@ -12,15 +18,9 @@ class WatchlistTvShowsNotifier extends ChangeNotifier {
 
   RequestState get watchlistState => _watchlistState;
 
-  String _message = '';
+  String _message = "";
 
   String get message => _message;
-
-  final GetWatchlistTvShows getWatchlistTvShows;
-
-  WatchlistTvShowsNotifier({
-    required this.getWatchlistTvShows,
-  });
 
   Future<void> fetchWatchlistTvShows() async {
     _watchlistState = RequestState.loading;

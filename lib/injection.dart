@@ -114,7 +114,7 @@ void init() {
   );
   locator.registerFactory(
     () => TopRatedTvShowsNotifier(
-      getPopularTvShows: locator(),
+      locator(),
     ),
   );
   locator.registerFactory(

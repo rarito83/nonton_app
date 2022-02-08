@@ -2,20 +2,21 @@ import 'package:equatable/equatable.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
 
 class TvShowModel extends Equatable {
-  TvShowModel(
-      {required this.backdropPath,
-      required this.firstAirDate,
-      required this.genreIds,
-      required this.id,
-      required this.name,
-      required this.originCountry,
-      required this.originalLanguage,
-      required this.originalName,
-      required this.overview,
-      required this.popularity,
-      required this.posterPath,
-      required this.voteAverage,
-      required this.voteCount});
+  TvShowModel({
+    required this.backdropPath,
+    required this.firstAirDate,
+    required this.genreIds,
+    required this.id,
+    required this.name,
+    required this.originCountry,
+    required this.originalLanguage,
+    required this.originalName,
+    required this.overview,
+    required this.popularity,
+    required this.posterPath,
+    required this.voteAverage,
+    required this.voteCount,
+  });
 
   final String? backdropPath;
   final String? firstAirDate;
@@ -64,19 +65,19 @@ class TvShowModel extends Equatable {
       };
 
   TvShow toEntity() => TvShow(
-        backdropPath: this.backdropPath,
-        firstAirDate: this.firstAirDate,
-        genreIds: this.genreIds,
-        id: this.id,
-        name: this.name,
-        originCountry: this.originCountry,
-        originalLanguage: this.originalLanguage,
-        originalName: this.originalName,
-        overview: this.overview,
-        popularity: this.popularity,
-        posterPath: this.posterPath,
-        voteAverage: this.voteAverage,
-        voteCount: this.voteCount,
+        backdropPath: backdropPath,
+        firstAirDate: firstAirDate,
+        genreIds: genreIds,
+        id: id,
+        name: name,
+        originCountry: originCountry,
+        originalLanguage: originalLanguage,
+        originalName: originalName,
+        overview: overview,
+        popularity: popularity,
+        posterPath: posterPath,
+        voteAverage: voteAverage,
+        voteCount: voteCount,
       );
 
   @override

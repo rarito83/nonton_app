@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
+import 'package:nonton_app/common/utils.dart';
 import 'package:nonton_app/domain/entities/genre.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/domain/entities/tv_show_detail.dart';
@@ -14,6 +15,7 @@ class TvShowDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detailTvShow';
 
   final int id;
+
   TvShowDetailPage({required this.id});
 
   @override
@@ -38,7 +40,7 @@ class _TvShowDetailPageState extends State<TvShowDetailPage> {
       body: Consumer<TvShowDetailNotifier>(
         builder: (context, provider, child) {
           if (provider.tvShowState == RequestState.loading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (provider.tvShowState == RequestState.loaded) {
@@ -74,17 +76,17 @@ class DetailTvContent extends StatelessWidget {
         CachedNetworkImage(
           imageUrl: 'https://image.tmdb.org/t/p/w500${tvShow.posterPath}',
           width: screenWidth,
-          placeholder: (context, url) => Center(
+          placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
             builder: (context, scrollController) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kRichBlack,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
@@ -110,24 +112,24 @@ class DetailTvContent extends StatelessWidget {
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
                                   await Provider.of<TvShowDetailNotifier>(
-                                      context,
-                                      listen: false)
+                                          context,
+                                          listen: false)
                                       .addWatchlist(tvShow);
                                 } else {
                                   await Provider.of<TvShowDetailNotifier>(
-                                      context,
-                                      listen: false)
+                                          context,
+                                          listen: false)
                                       .removeFromWatchlist(tvShow);
                                 }
 
                                 final message =
                                     Provider.of<TvShowDetailNotifier>(context,
-                                        listen: false)
+                                            listen: false)
                                         .watchlistMessage;
 
                                 if (message ==
-                                    TvShowDetailNotifier
-                                        .watchlistAddSuccessMessage ||
+                                        TvShowDetailNotifier
+                                            .watchlistAddSuccessMessage ||
                                     message ==
                                         TvShowDetailNotifier
                                             .watchlistRemoveSuccessMessage) {
@@ -147,24 +149,24 @@ class DetailTvContent extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   isAddedWatchlist
-                                      ? Icon(Icons.check)
-                                      : Icon(Icons.add),
-                                  Text('Watchlist'),
+                                      ? const Icon(Icons.check)
+                                      : const Icon(Icons.add),
+                                  const Text('Watchlist'),
                                 ],
                               ),
                             ),
                             Text(
-                              _showGenres(tvShow.genres),
+                              getFormattedGenre(tvShow.genres),
                             ),
-                            Text("Runtime"
-                              // _showDuration(tvShow.runtime),
-                            ),
+                            const Text("Runtime"
+                                // _showDuration(tvShow.runtime),
+                                ),
                             Row(
                               children: [
                                 RatingBarIndicator(
                                   rating: tvShow.voteAverage / 2,
                                   itemCount: 5,
-                                  itemBuilder: (context, index) => Icon(
+                                  itemBuilder: (context, index) => const Icon(
                                     Icons.star,
                                     color: kMikadoYellow,
                                   ),
@@ -173,7 +175,7 @@ class DetailTvContent extends StatelessWidget {
                                 Text('${tvShow.voteAverage}')
                               ],
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Overview',
                               style: kHeading6,
@@ -181,7 +183,7 @@ class DetailTvContent extends StatelessWidget {
                             Text(
                               tvShow.overview,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Recommendations',
                               style: kHeading6,
@@ -190,7 +192,7 @@ class DetailTvContent extends StatelessWidget {
                               builder: (context, data, child) {
                                 if (data.recommendationState ==
                                     RequestState.loading) {
-                                  return Center(
+                                  return const Center(
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (data.recommendationState ==
@@ -215,20 +217,21 @@ class DetailTvContent extends StatelessWidget {
                                               );
                                             },
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
+                                              borderRadius:
+                                                  const BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                                                 placeholder: (context, url) =>
-                                                    Center(
-                                                      child:
+                                                    const Center(
+                                                  child:
                                                       CircularProgressIndicator(),
-                                                    ),
+                                                ),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                    Icon(Icons.error),
+                                                        const Icon(Icons.error),
                                               ),
                                             ),
                                           ),
@@ -269,7 +272,7 @@ class DetailTvContent extends StatelessWidget {
             backgroundColor: kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -280,28 +283,27 @@ class DetailTvContent extends StatelessWidget {
     );
   }
 
-  String _showGenres(List<Genre> genres) {
-    String result = '';
-    for (var genre in genres) {
-      result += genre.name + ', ';
-    }
-
-    if (result.isEmpty) {
-      return result;
-    }
-
-    return result.substring(0, result.length - 2);
-  }
-
-  String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
-
-    if (hours > 0) {
-      return '${hours}h ${minutes}m';
-    } else {
-      return '${minutes}m';
-    }
-  }
+  // String _showGenres(List<Genre> genres) {
+  //   String result = '';
+  //   for (var genre in genres) {
+  //     result += genre.name + ', ';
+  //   }
+  //
+  //   if (result.isEmpty) {
+  //     return result;
+  //   }
+  //
+  //   return result.substring(0, result.length - 2);
+  // }
+  //
+  // String _showDuration(int runtime) {
+  //   final int hours = runtime ~/ 60;
+  //   final int minutes = runtime % 60;
+  //
+  //   if (hours > 0) {
+  //     return '${hours}h ${minutes}m';
+  //   } else {
+  //     return '${minutes}m';
+  //   }
+  // }
 }
-

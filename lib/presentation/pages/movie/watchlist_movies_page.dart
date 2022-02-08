@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/common/utils.dart';
 import 'package:nonton_app/presentation/providers/movie/watchlist_movies_notifier.dart';
@@ -28,6 +29,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
+  @override
   void didPopNext() {
     Provider.of<WatchlistMovieNotifier>(context, listen: false)
         .fetchWatchlistMovies();
@@ -41,10 +43,17 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
         child: Consumer<WatchlistMovieNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.loading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (data.watchlistState == RequestState.loaded) {
+              if (data.watchlistMovies.isEmpty) {
+                return Center(
+                    child: Text(
+                      WATCHLIST_MOVIE_EMPTY_MESSAGE,
+                      style: kBodyText,
+                    ));
+              }
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final movie = data.watchlistMovies[index];
@@ -54,7 +63,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
               );
             } else {
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(data.message),
               );
             }

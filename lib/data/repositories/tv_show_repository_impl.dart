@@ -34,7 +34,7 @@ class TvShowRepositoryImpl with TvShowRepository {
   @override
   Future<Either<Failure, TvShowDetail>> getTvShowDetail(int id) async {
     try {
-      final result = await tvShowRemoteDataSource.getDetailTvShow(id);
+      final result = await tvShowRemoteDataSource.getTvShowDetail(id);
       return Right(result.toEntity());
     } on ServerException {
       return Left(ServerFailure(''));
@@ -46,7 +46,7 @@ class TvShowRepositoryImpl with TvShowRepository {
   @override
   Future<Either<Failure, List<TvShow>>> getTvShowRecommendations(int id) async {
     try {
-      final result = await tvShowRemoteDataSource.getRecommendationTvShows(id);
+      final result = await tvShowRemoteDataSource.getTvShowRecommendations(id);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       throw Left(ServerFailure(''));
@@ -82,7 +82,7 @@ class TvShowRepositoryImpl with TvShowRepository {
   @override
   Future<Either<Failure, List<TvShow>>> searchTvShows(String query) async {
     try {
-      final result = await tvShowRemoteDataSource.searchTvShow(query);
+      final result = await tvShowRemoteDataSource.searchTvShows(query);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));

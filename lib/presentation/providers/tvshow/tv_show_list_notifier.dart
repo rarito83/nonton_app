@@ -6,6 +6,18 @@ import 'package:nonton_app/domain/usecases/tvshow/get_popular_tv_shows.dart';
 import 'package:nonton_app/domain/usecases/tvshow/get_top_rated_tv_show.dart';
 
 class TvShowListNotifier extends ChangeNotifier {
+  final GetNowPlayingTvShows getNowPlayingTvShows;
+
+  final GetPopularTvShows getPopularTvShows;
+
+  final GetTopRatedTvShows getTopRatedTvShows;
+
+  TvShowListNotifier({
+    required this.getNowPlayingTvShows,
+    required this.getPopularTvShows,
+    required this.getTopRatedTvShows,
+  });
+
   var _nowPlayingTvShows = <TvShow>[];
 
   List<TvShow> get nowPlayingTvShows => _nowPlayingTvShows;
@@ -30,19 +42,9 @@ class TvShowListNotifier extends ChangeNotifier {
 
   RequestState get topRatedTvShowsState => _topRatedTvShowsState;
 
-  String _message = '';
+  String _message = "";
 
   String get message => _message;
-
-  TvShowListNotifier({
-    required this.getNowPlayingTvShows,
-    required this.getPopularTvShows,
-    required this.getTopRatedTvShows,
-  });
-
-  final GetNowPlayingTvShows getNowPlayingTvShows;
-  final GetPopularTvShows getPopularTvShows;
-  final GetTopRatedTvShows getTopRatedTvShows;
 
   Future<void> fetchNowPlayingTvShows() async {
     _nowPlayingTvShowState = RequestState.loading;

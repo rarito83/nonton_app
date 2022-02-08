@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
-import 'package:nonton_app/domain/entities/genre.dart';
+import 'package:nonton_app/common/utils.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
 import 'package:nonton_app/domain/entities/movie_detail.dart';
 import 'package:nonton_app/presentation/providers/movie/movie_detail_notifier.dart';
@@ -14,6 +13,7 @@ class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
 
   final int id;
+
   MovieDetailPage({required this.id});
 
   @override
@@ -77,7 +77,7 @@ class DetailContent extends StatelessWidget {
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
@@ -147,17 +147,17 @@ class DetailContent extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   isAddedWatchlist
-                                      ? Icon(Icons.check)
-                                      : Icon(Icons.add),
-                                  Text('Watchlist'),
+                                      ? const Icon(Icons.check)
+                                      : const Icon(Icons.add),
+                                  const Text('Watchlist'),
                                 ],
                               ),
                             ),
                             Text(
-                              _showGenres(movie.genres),
+                              getFormattedGenre(movie.genres),
                             ),
                             Text(
-                              _showDuration(movie.runtime),
+                              getFormattedDuration(movie.runtime),
                             ),
                             Row(
                               children: [
@@ -281,27 +281,27 @@ class DetailContent extends StatelessWidget {
     );
   }
 
-  String _showGenres(List<Genre> genres) {
-    String result = '';
-    for (var genre in genres) {
-      result += genre.name + ', ';
-    }
-
-    if (result.isEmpty) {
-      return result;
-    }
-
-    return result.substring(0, result.length - 2);
-  }
-
-  String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
-
-    if (hours > 0) {
-      return '${hours}h ${minutes}m';
-    } else {
-      return '${minutes}m';
-    }
-  }
+// String _showGenres(List<Genre> genres) {
+//   String result = '';
+//   for (var genre in genres) {
+//     result += genre.name + ', ';
+//   }
+//
+//   if (result.isEmpty) {
+//     return result;
+//   }
+//
+//   return result.substring(0, result.length - 2);
+// }
+//
+// String _showDuration(int runtime) {
+//   final int hours = runtime ~/ 60;
+//   final int minutes = runtime % 60;
+//
+//   if (hours > 0) {
+//     return '${hours}h ${minutes}m';
+//   } else {
+//     return '${minutes}m';
+//   }
+// }
 }

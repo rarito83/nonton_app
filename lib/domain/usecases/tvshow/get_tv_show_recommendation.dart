@@ -10,7 +10,7 @@ class GetTvShowRecommendation {
     this.repository,
   );
 
-  Future<Either<Failure, List<TvShow>>> execute(id) {
+  Future<Either<Failure, List<TvShow>>> execute(int id) {
     return repository.getTvShowRecommendations(id);
   }
 }

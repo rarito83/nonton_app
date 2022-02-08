@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/common/utils.dart';
 import 'package:nonton_app/presentation/providers/tvshow/watchlist_tv_shows_notifier.dart';
@@ -41,10 +42,17 @@ class _WatchlistTvShowPageState extends State<WatchlistTvShowPage>
         child: Consumer<WatchlistTvShowsNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.loading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (data.watchlistState == RequestState.loaded) {
+              if (data.watchlistTvShows.isEmpty) {
+                return Center(
+                    child: Text(
+                      WATCHLIST_TV_SHOW_EMPTY_MESSAGE,
+                      style: kBodyText,
+                    ));
+              }
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tv = data.watchlistTvShows[index];
@@ -54,7 +62,7 @@ class _WatchlistTvShowPageState extends State<WatchlistTvShowPage>
               );
             } else {
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(data.message),
               );
             }

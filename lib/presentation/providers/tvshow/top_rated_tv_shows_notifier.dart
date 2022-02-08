@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
-import 'package:nonton_app/domain/usecases/tvshow/get_popular_tv_shows.dart';
+import 'package:nonton_app/domain/usecases/tvshow/get_top_rated_tv_show.dart';
 
 class TopRatedTvShowsNotifier extends ChangeNotifier {
-  final GetPopularTvShows getPopularTvShows;
+  final GetTopRatedTvShows getTopRatedTvShows;
 
-  TopRatedTvShowsNotifier({
-    required this.getPopularTvShows,
-  });
+  TopRatedTvShowsNotifier(this.getTopRatedTvShows);
 
   RequestState _state = RequestState.empty;
 
@@ -26,7 +24,7 @@ class TopRatedTvShowsNotifier extends ChangeNotifier {
     _state = RequestState.loading;
     notifyListeners();
 
-    final result = await getPopularTvShows.execute();
+    final result = await getTopRatedTvShows.execute();
 
     result.fold(
       (failure) {

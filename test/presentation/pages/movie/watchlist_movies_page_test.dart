@@ -50,7 +50,7 @@ void main() {
 
       await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
 
-      expect(find.text(WACHLIST_MOVIE_EMPTY_MESSAGE), findsOneWidget);
+      expect(find.text(WATCHLIST_MOVIE_EMPTY_MESSAGE), findsOneWidget);
     });
 
     testWidgets('loading indicator should display when getting data',

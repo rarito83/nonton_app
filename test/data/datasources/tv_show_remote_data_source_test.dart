@@ -121,14 +121,14 @@ void main() {
   });
 
   group('get tv show detail', () {
-    final tId = 1;
-    final testMovieDetail = TvShowDetailModel.fromJson(
+    const tvId = 1;
+    final testMovieDetail = TvShowDetailResponse.fromJson(
         json.decode(readJson('dummy_data/tv_show_detail.json')));
 
     test('should return tv show detail when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/$tId?$API_KEY')))
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/$tvId?$API_KEY')))
           .thenAnswer((_) async => http.Response(
                   readJson('dummy_data/tv_show_detail.json'), 200,
                   headers: {
@@ -136,7 +136,7 @@ void main() {
                         'application/json; charset=utf-8',
                   }));
       // act
-      final result = await dataSourceImpl.getDetailTvShow(tId);
+      final result = await dataSourceImpl.getTvShowDetail(tvId);
       // assert
       expect(result, equals(testMovieDetail));
     });
@@ -144,10 +144,10 @@ void main() {
     test('should throw Server Exception when the response code is 404 or other',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/$tId?$API_KEY')))
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/$tvId?$API_KEY')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = dataSourceImpl.getDetailTvShow(tId);
+      final call = dataSourceImpl.getTvShowDetail(tvId);
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });
@@ -157,13 +157,13 @@ void main() {
     final testRecommTVShowList = TvShowResponse.fromJson(
             json.decode(readJson('dummy_data/tv_show_recommendations.json')))
         .tvShowList;
-    final tId = 1;
+    const tvId = 1;
 
     test('should return list of TVShow Model when the response code is 200',
         () async {
       // arrange
       when(mockHttpClient
-              .get(Uri.parse('$BASE_URL/tv/$tId/recommendations?$API_KEY')))
+              .get(Uri.parse('$BASE_URL/tv/$tvId/recommendations?$API_KEY')))
           .thenAnswer((_) async => http.Response(
                   readJson('dummy_data/tv_show_recommendations.json'), 200,
                   headers: {
@@ -171,7 +171,7 @@ void main() {
                         'application/json; charset=utf-8',
                   }));
       // act
-      final result = await dataSourceImpl.getRecommendationTvShows(tId);
+      final result = await dataSourceImpl.getTvShowRecommendations(tvId);
       // assert
       expect(result, equals(testRecommTVShowList));
     });
@@ -180,10 +180,10 @@ void main() {
         () async {
       // arrange
       when(mockHttpClient
-              .get(Uri.parse('$BASE_URL/tv/$tId/recommendations?$API_KEY')))
+              .get(Uri.parse('$BASE_URL/tv/$tvId/recommendations?$API_KEY')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = dataSourceImpl.getRecommendationTvShows(tId);
+      final call = dataSourceImpl.getTvShowRecommendations(tvId);
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });
@@ -193,7 +193,7 @@ void main() {
     final tSearchResult = TvShowResponse.fromJson(
             json.decode(readJson('dummy_data/search_avengers_tv_show.json')))
         .tvShowList;
-    final tQuery = 'avengers';
+    const tQuery = 'avengers';
 
     test('should return list of tv shows when response code is 200', () async {
       // arrange
@@ -206,7 +206,7 @@ void main() {
                         'application/json; charset=utf-8',
                   }));
       // act
-      final result = await dataSourceImpl.searchTvShow(tQuery);
+      final result = await dataSourceImpl.searchTvShows(tQuery);
       // assert
       expect(result, tSearchResult);
     });
@@ -218,7 +218,7 @@ void main() {
               .get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$tQuery')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = dataSourceImpl.searchTvShow(tQuery);
+      final call = dataSourceImpl.searchTvShows(tQuery);
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });

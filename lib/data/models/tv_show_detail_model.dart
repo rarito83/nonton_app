@@ -3,8 +3,8 @@ import 'package:nonton_app/data/models/genre_model.dart';
 import 'package:nonton_app/data/models/season_model.dart';
 import 'package:nonton_app/domain/entities/tv_show_detail.dart';
 
-class TvShowDetailModel extends Equatable {
-  TvShowDetailModel({
+class TvShowDetailResponse extends Equatable {
+  TvShowDetailResponse({
     required this.backdropPath,
     required this.episodeRunTime,
     required this.firstAirDate,
@@ -48,8 +48,8 @@ class TvShowDetailModel extends Equatable {
   final double voteAverage;
   final int voteCount;
 
-  factory TvShowDetailModel.fromJson(Map<String, dynamic> json) =>
-      TvShowDetailModel(
+  factory TvShowDetailResponse.fromJson(Map<String, dynamic> json) =>
+      TvShowDetailResponse(
         backdropPath: json["backdrop_path"],
         episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
         firstAirDate: json["first_air_date"],
