@@ -15,7 +15,7 @@ const TOP_RATED_HEADING_TEXT = 'Top Rated';
 const NOT_STRING_REPLACEMENT = '-';
 const FAILED_TO_FETCH_DATA_MESSAGE = 'Failed to fetch data';
 const ABOUT_DESCRIPTION_TEXT =
-    'Ditonton merupakan sebuah aplikasi katalog film yang dikembangkan oleh Dicoding Indonesia sebagai contoh proyek aplikasi untuk kelas Menjadi Flutter Developer Expert.';
+    'Nonton merupakan sebuah aplikasi katalog film yang dikembangkan oleh Dicoding Indonesia sebagai contoh proyek aplikasi untuk kelas Menjadi Flutter Developer Expert.';
 
 // colors
 const Color kRichBlack = Color(0xFF000814);

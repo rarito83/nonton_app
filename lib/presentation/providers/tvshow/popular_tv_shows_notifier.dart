@@ -14,7 +14,7 @@ class PopularTvShowNotifier extends ChangeNotifier {
 
   List<TvShow> _tvShows = [];
 
-  List<TvShow> get tvShow => _tvShows;
+  List<TvShow> get tvShows => _tvShows;
 
   String _message = '';
 

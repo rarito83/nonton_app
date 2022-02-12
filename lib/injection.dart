@@ -64,6 +64,7 @@ void init() {
       getTopRatedMovies: locator(),
     ),
   );
+
   locator.registerFactory(
     () => MovieDetailNotifier(
       getMovieDetail: locator(),
@@ -98,6 +99,7 @@ void init() {
       getTopRatedTvShows: locator(),
     ),
   );
+
   locator.registerFactory(
     () => TvShowDetailNotifier(
       getTvShowDetail: locator(),
@@ -107,16 +109,19 @@ void init() {
       removeTvShowWatchlist: locator(),
     ),
   );
+
   locator.registerFactory(
     () => PopularTvShowNotifier(
       locator(),
     ),
   );
+
   locator.registerFactory(
     () => TopRatedTvShowsNotifier(
       locator(),
     ),
   );
+
   locator.registerFactory(
     () => WatchlistTvShowsNotifier(
       getWatchlistTvShows: locator(),

@@ -4,15 +4,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/common/utils.dart';
-import 'package:nonton_app/domain/entities/genre.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/domain/entities/tv_show_detail.dart';
-import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
 import 'package:nonton_app/presentation/providers/tvshow/tv_show_detail_notifier.dart';
 import 'package:provider/provider.dart';
 
 class TvShowDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detailTvShow';
+  static const ROUTE_NAME = '/detail-tvShow';
 
   final int id;
 
@@ -158,9 +156,12 @@ class DetailTvContent extends StatelessWidget {
                             Text(
                               getFormattedGenre(tvShow.genres),
                             ),
-                            const Text("Runtime"
-                                // _showDuration(tvShow.runtime),
-                                ),
+                            Text(
+                              tvShow.episodeRunTime.isNotEmpty
+                                  ? getFormattedDurationFromList(
+                                      tvShow.episodeRunTime)
+                                  : 'Runtime',
+                            ),
                             Row(
                               children: [
                                 RatingBarIndicator(
@@ -212,7 +213,7 @@ class DetailTvContent extends StatelessWidget {
                                             onTap: () {
                                               Navigator.pushReplacementNamed(
                                                 context,
-                                                MovieDetailPage.ROUTE_NAME,
+                                                TvShowDetailPage.ROUTE_NAME,
                                                 arguments: movie.id,
                                               );
                                             },
@@ -283,27 +284,27 @@ class DetailTvContent extends StatelessWidget {
     );
   }
 
-  // String _showGenres(List<Genre> genres) {
-  //   String result = '';
-  //   for (var genre in genres) {
-  //     result += genre.name + ', ';
-  //   }
-  //
-  //   if (result.isEmpty) {
-  //     return result;
-  //   }
-  //
-  //   return result.substring(0, result.length - 2);
-  // }
-  //
-  // String _showDuration(int runtime) {
-  //   final int hours = runtime ~/ 60;
-  //   final int minutes = runtime % 60;
-  //
-  //   if (hours > 0) {
-  //     return '${hours}h ${minutes}m';
-  //   } else {
-  //     return '${minutes}m';
-  //   }
-  // }
+// String _showGenres(List<Genre> genres) {
+//   String result = '';
+//   for (var genre in genres) {
+//     result += genre.name + ', ';
+//   }
+//
+//   if (result.isEmpty) {
+//     return result;
+//   }
+//
+//   return result.substring(0, result.length - 2);
+// }
+//
+// String _showDuration(int runtime) {
+//   final int hours = runtime ~/ 60;
+//   final int minutes = runtime % 60;
+//
+//   if (hours > 0) {
+//     return '${hours}h ${minutes}m';
+//   } else {
+//     return '${minutes}m';
+//   }
+// }
 }

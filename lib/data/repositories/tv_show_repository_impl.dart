@@ -32,6 +32,30 @@ class TvShowRepositoryImpl with TvShowRepository {
   }
 
   @override
+  Future<Either<Failure, List<TvShow>>> getPopularTvShows() async {
+    try {
+      final result = await tvShowRemoteDataSource.getPopularTvShows();
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerFailure {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TvShow>>> getTopRatedTvShows() async {
+    try {
+      final result = await tvShowRemoteDataSource.getTopRatedTvShows();
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerFailure {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
   Future<Either<Failure, TvShowDetail>> getTvShowDetail(int id) async {
     try {
       final result = await tvShowRemoteDataSource.getTvShowDetail(id);
@@ -49,33 +73,9 @@ class TvShowRepositoryImpl with TvShowRepository {
       final result = await tvShowRemoteDataSource.getTvShowRecommendations(id);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
-      throw Left(ServerFailure(''));
+      return Left(ServerFailure(''));
     } on SocketException {
-      throw Left(ConnectionFailure('Failed to connect to the network'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<TvShow>>> getPopularTvShows() async {
-    try {
-      final result = await tvShowRemoteDataSource.getPopularTvShows();
-      return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerFailure {
-      throw Left(ServerFailure(''));
-    } on SocketException {
-      throw Left(ConnectionFailure('Failed to connect to the network'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<TvShow>>> getTopRatedTvShows() async {
-    try {
-      final result = await tvShowRemoteDataSource.getTopRatedTvShows();
-      return Right(result.map((model) => model.toEntity()).toList());
-    } on ServerFailure {
-      throw Left(ServerFailure(''));
-    } on SocketException {
-      throw Left(ConnectionFailure('Failed to connect to the network'));
+      return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 

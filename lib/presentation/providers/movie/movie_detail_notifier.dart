@@ -10,8 +10,8 @@ import 'package:nonton_app/domain/usecases/movie/remove_movie_watchlist.dart';
 import 'package:nonton_app/domain/usecases/movie/save_movie_watchlist.dart';
 
 class MovieDetailNotifier extends ChangeNotifier {
-  static const watchlistAddMovieSuccessMessage = 'Added Movie to Watchlist';
-  static const watchlistRemoveMovieSuccessMessage = 'Removed Movie from Watchlist';
+  static const watchlistAddSuccessMessage = 'Added to Watchlist';
+  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
 
   final GetMovieDetail getMovieDetail;
   final GetMovieRecommendations getMovieRecommendations;
@@ -47,9 +47,9 @@ class MovieDetailNotifier extends ChangeNotifier {
 
   String get message => _message;
 
-  bool _isAddedtoWatchlist = false;
+  bool _isAddedToWatchlist = false;
 
-  bool get isAddedToWatchlist => _isAddedtoWatchlist;
+  bool get isAddedToWatchlist => _isAddedToWatchlist;
 
   Future<void> fetchMovieDetail(int id) async {
     _movieState = RequestState.loading;
@@ -118,7 +118,7 @@ class MovieDetailNotifier extends ChangeNotifier {
 
   Future<void> loadWatchlistStatus(int id) async {
     final result = await getWatchListMovieStatus.execute(id);
-    _isAddedtoWatchlist = result;
+    _isAddedToWatchlist = result;
     notifyListeners();
   }
 }

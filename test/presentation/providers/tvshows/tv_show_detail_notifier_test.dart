@@ -48,12 +48,12 @@ void main() {
     });
   });
 
-  final tId = 1;
+  const tvId = 1;
 
   void _arrangeUsecase() {
-    when(mockGetTvShowDetail.execute(tId))
+    when(mockGetTvShowDetail.execute(tvId))
         .thenAnswer((_) async => Right(testTvShowDetail));
-    when(mockGetTvShowRecommendation.execute(tId))
+    when(mockGetTvShowRecommendation.execute(tvId))
         .thenAnswer((_) async => Right(testTvShowList));
   }
 
@@ -62,17 +62,17 @@ void main() {
       // arrange
       _arrangeUsecase();
       // act
-      await provider.fetchTvShowDetail(tId);
+      await provider.fetchTvShowDetail(tvId);
       // assert
-      verify(mockGetTvShowDetail.execute(tId));
-      verify(mockGetTvShowRecommendation.execute(tId));
+      verify(mockGetTvShowDetail.execute(tvId));
+      verify(mockGetTvShowRecommendation.execute(tvId));
     });
 
     test('should change state to Loading when usecase is called', () {
       // arrange
       _arrangeUsecase();
       // act
-      provider.fetchTvShowDetail(tId);
+      provider.fetchTvShowDetail(tvId);
       // assert
       expect(provider.tvShowState, RequestState.loading);
       expect(listenerCallCount, 1);
@@ -82,11 +82,11 @@ void main() {
       // arrange
       _arrangeUsecase();
       // act
-      await provider.fetchTvShowDetail(tId);
+      await provider.fetchTvShowDetail(tvId);
       // assert
       expect(provider.tvShowState, RequestState.loaded);
       expect(provider.tvShowDetail, testTvShowDetail);
-      expect(listenerCallCount, 4);
+      expect(listenerCallCount, 3);
     });
 
     test('should change recommendation movies when data is gotten successfully',
@@ -94,7 +94,7 @@ void main() {
           // arrange
           _arrangeUsecase();
           // act
-          await provider.fetchTvShowDetail(tId);
+          await provider.fetchTvShowDetail(tvId);
           // assert
           expect(provider.tvShowState, RequestState.loaded);
           expect(provider.tvShowRecommendations, testTvShowList);
@@ -106,9 +106,9 @@ void main() {
       // arrange
       _arrangeUsecase();
       // act
-      await provider.fetchTvShowDetail(tId);
+      await provider.fetchTvShowDetail(tvId);
       // assert
-      verify(mockGetTvShowRecommendation.execute(tId));
+      verify(mockGetTvShowRecommendation.execute(tvId));
       expect(provider.tvShowRecommendations, testTvShowList);
     });
 
@@ -117,7 +117,7 @@ void main() {
           // arrange
           _arrangeUsecase();
           // act
-          await provider.fetchTvShowDetail(tId);
+          await provider.fetchTvShowDetail(tvId);
           // assert
           expect(provider.recommendationState, RequestState.loaded);
           expect(provider.tvShowRecommendations, testTvShowList);
@@ -125,12 +125,12 @@ void main() {
 
     test('should update error message when request in successful', () async {
       // arrange
-      when(mockGetTvShowDetail.execute(tId))
+      when(mockGetTvShowDetail.execute(tvId))
           .thenAnswer((_) async => Right(testTvShowDetail));
-      when(mockGetTvShowRecommendation.execute(tId))
+      when(mockGetTvShowRecommendation.execute(tvId))
           .thenAnswer((_) async => Left(ServerFailure('Failed')));
       // act
-      await provider.fetchTvShowDetail(tId);
+      await provider.fetchTvShowDetail(tvId);
       // assert
       expect(provider.recommendationState, RequestState.error);
       expect(provider.message, 'Failed');
@@ -203,12 +203,12 @@ void main() {
   group('on Error', () {
     test('should return error when data is unsuccessful', () async {
       // arrange
-      when(mockGetTvShowDetail.execute(tId))
+      when(mockGetTvShowDetail.execute(tvId))
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
-      when(mockGetTvShowRecommendation.execute(tId))
+      when(mockGetTvShowRecommendation.execute(tvId))
           .thenAnswer((_) async => Right(testTvShowList));
       // act
-      await provider.fetchTvShowDetail(tId);
+      await provider.fetchTvShowDetail(tvId);
       // assert
       expect(provider.tvShowState, RequestState.error);
       expect(provider.message, 'Server Failure');

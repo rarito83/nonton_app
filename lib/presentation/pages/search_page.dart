@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/drawer_item_enum.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
+import 'package:nonton_app/presentation/pages/tvshow/tv_show_detail_page.dart';
 import 'package:nonton_app/presentation/pages/movie/movie_detail_page.dart';
 import 'package:nonton_app/presentation/providers/search_notifier.dart';
 import 'package:nonton_app/presentation/widgets/card_search_content.dart';
+
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 class SearchPage extends StatelessWidget {
   static const ROUTE_NAME = '/search';
@@ -62,7 +64,8 @@ class SearchPage extends StatelessWidget {
   }
 
   Widget _buildSearch() {
-    return Consumer<SearchNotifier>(builder: (context, data, child) {
+    return Consumer<SearchNotifier>(
+      builder: (context, data, _) {
       if (data.state == RequestState.loading) {
         return const Center(
           child: CircularProgressIndicator(),
@@ -106,7 +109,7 @@ class SearchPage extends StatelessWidget {
           return CardSearchContent(
             tvShow: tv,
             drawerItem: drawerItem,
-            routeName: MovieDetailPage.ROUTE_NAME,
+            routeName: TvShowDetailPage.ROUTE_NAME,
           );
         },
         itemCount: tvShows.length,

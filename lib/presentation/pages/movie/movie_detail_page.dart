@@ -10,7 +10,7 @@ import 'package:nonton_app/presentation/providers/movie/movie_detail_notifier.da
 import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+  static const ROUTE_NAME = '/detail-movie';
 
   final int id;
 
@@ -62,9 +62,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 class DetailContent extends StatelessWidget {
   final MovieDetail movie;
   final List<Movie> recommendations;
-  final bool isAddedWatchlist;
+  final bool isAddedToWatchlist;
 
-  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+  DetailContent(this.movie, this.recommendations, this.isAddedToWatchlist);
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class DetailContent extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                if (!isAddedWatchlist) {
+                                if (!isAddedToWatchlist) {
                                   await Provider.of<MovieDetailNotifier>(
                                           context,
                                           listen: false)
@@ -127,10 +127,10 @@ class DetailContent extends StatelessWidget {
 
                                 if (message ==
                                         MovieDetailNotifier
-                                            .watchlistAddMovieSuccessMessage ||
+                                            .watchlistAddSuccessMessage ||
                                     message ==
                                         MovieDetailNotifier
-                                            .watchlistRemoveMovieSuccessMessage) {
+                                            .watchlistRemoveSuccessMessage) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(message)));
                                 } else {
@@ -146,7 +146,7 @@ class DetailContent extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  isAddedWatchlist
+                                  isAddedToWatchlist
                                       ? const Icon(Icons.check)
                                       : const Icon(Icons.add),
                                   const Text('Watchlist'),

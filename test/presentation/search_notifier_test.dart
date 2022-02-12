@@ -90,7 +90,7 @@ void main() {
       await provider.fetchTvShowSearch(testQueryTvShow);
       // assert
       expect(provider.state, RequestState.loaded);
-      expect(provider.searchTvShowsResult, testQueryTvShow);
+      expect(provider.searchTvShowsResult, testTvShowList);
       expect(listenerCallCount, 2);
     });
 

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/presentation/pages/about_page.dart';
 
-void main() {
+main() {
   Widget _makeTestableWidget(Widget body) {
     return MaterialApp(
       home: body,

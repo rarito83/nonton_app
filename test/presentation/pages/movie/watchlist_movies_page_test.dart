@@ -5,7 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:nonton_app/common/constants.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/movie.dart';
-import 'package:nonton_app/presentation/pages/movie/watchlist_movies_page.dart';
+import 'package:nonton_app/presentation/pages/movie/watchlist_movie_page.dart';
 import 'package:nonton_app/presentation/providers/movie/watchlist_movies_notifier.dart';
 import 'package:nonton_app/presentation/widgets/movie_card_list.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ void main() {
       when(mockNotifier.watchlistState).thenReturn(RequestState.loaded);
       when(mockNotifier.watchlistMovies).thenReturn(testMovieList);
 
-      await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+      await tester.pumpWidget(_makeTestableWidget(WatchlistMoviePage()));
 
       expect(find.byType(ListView), findsOneWidget);
       expect(find.byType(MovieCard), findsWidgets);
@@ -48,7 +48,7 @@ void main() {
       when(mockNotifier.watchlistState).thenReturn(RequestState.loaded);
       when(mockNotifier.watchlistMovies).thenReturn(<Movie>[]);
 
-      await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+      await tester.pumpWidget(_makeTestableWidget(WatchlistMoviePage()));
 
       expect(find.text(WATCHLIST_MOVIE_EMPTY_MESSAGE), findsOneWidget);
     });
@@ -57,7 +57,7 @@ void main() {
         (WidgetTester tester) async {
       when(mockNotifier.watchlistState).thenReturn(RequestState.loading);
 
-      await tester.pumpWidget(_makeTestableWidget(WatchlistMoviesPage()));
+      await tester.pumpWidget(_makeTestableWidget(WatchlistMoviePage()));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });

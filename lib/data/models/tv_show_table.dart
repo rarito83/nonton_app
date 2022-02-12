@@ -3,7 +3,7 @@ import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/domain/entities/tv_show_detail.dart';
 
 class TvShowTable extends Equatable {
-  TvShowTable({
+  const TvShowTable({
     required this.id,
     required this.name,
     required this.posterPath,

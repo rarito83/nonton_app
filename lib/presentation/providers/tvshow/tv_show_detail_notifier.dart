@@ -34,9 +34,9 @@ class TvShowDetailNotifier extends ChangeNotifier {
 
   RequestState get tvShowState => _tvShowState;
 
-  List<TvShow> _tvShowRecommndations = [];
+  List<TvShow> _tvShowRecommendations = [];
 
-  List<TvShow> get tvShowRecommendations => _tvShowRecommndations;
+  List<TvShow> get tvShowRecommendations => _tvShowRecommendations;
 
   RequestState _recommendationState = RequestState.empty;
 
@@ -46,9 +46,9 @@ class TvShowDetailNotifier extends ChangeNotifier {
 
   String get message => _message;
 
-  bool _isAddedtoWatchlist = false;
+  bool _isAddedToWatchlist = false;
 
-  bool get isAddedToWatchlist => _isAddedtoWatchlist;
+  bool get isAddedToWatchlist => _isAddedToWatchlist;
 
   Future<void> fetchTvShowDetail(int id) async {
     _tvShowState = RequestState.loading;
@@ -72,7 +72,7 @@ class TvShowDetailNotifier extends ChangeNotifier {
           },
           (tvShows) {
             _recommendationState = RequestState.loaded;
-            _tvShowRecommndations = tvShows;
+            _tvShowRecommendations = tvShows;
           },
         );
         _tvShowState = RequestState.loaded;
@@ -117,7 +117,7 @@ class TvShowDetailNotifier extends ChangeNotifier {
 
   Future<void> loadWatchlistStatus(int id) async {
     final result = await getWatchlistTvShowStatus.execute(id);
-    _isAddedtoWatchlist = result;
+    _isAddedToWatchlist = result;
     notifyListeners();
   }
 }

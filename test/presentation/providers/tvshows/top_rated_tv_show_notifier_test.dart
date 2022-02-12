@@ -45,7 +45,7 @@ void main() {
         await notifier.fetchTopRatedTvShows();
         // assert
         expect(notifier.state, RequestState.loaded);
-        expect(notifier.tvShow, testTvShowList);
+        expect(notifier.tvShows, testTvShowList);
         expect(listenerCallCount, 2);
       });
 

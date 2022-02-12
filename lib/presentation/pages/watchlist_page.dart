@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nonton_app/common/constants.dart';
-import 'package:nonton_app/presentation/pages/movie/watchlist_movies_page.dart';
+import 'package:nonton_app/presentation/pages/movie/watchlist_movie_page.dart';
 import 'package:nonton_app/presentation/pages/tvshow/watchlist_tv_show_page.dart';
 
 class WatchlistPage extends StatelessWidget {
@@ -32,7 +32,7 @@ class WatchlistPage extends StatelessWidget {
         },
         body: TabBarView(
           children: <Widget>[
-            WatchlistMoviesPage(),
+            WatchlistMoviePage(),
             WatchlistTvShowPage(),
           ],
         ),

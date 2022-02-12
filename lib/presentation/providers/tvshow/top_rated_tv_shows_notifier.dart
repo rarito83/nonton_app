@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nonton_app/common/state_enum.dart';
 import 'package:nonton_app/domain/entities/tv_show.dart';
 import 'package:nonton_app/domain/usecases/tvshow/get_top_rated_tv_show.dart';
 
 class TopRatedTvShowsNotifier extends ChangeNotifier {
-  final GetTopRatedTvShows getTopRatedTvShows;
+  final GetTopRatedTvShows topRatedTvShows;
 
-  TopRatedTvShowsNotifier(this.getTopRatedTvShows);
+  TopRatedTvShowsNotifier(this.topRatedTvShows);
 
   RequestState _state = RequestState.empty;
 
@@ -14,7 +14,7 @@ class TopRatedTvShowsNotifier extends ChangeNotifier {
 
   List<TvShow> _tvShows = [];
 
-  List<TvShow> get tvShow => _tvShows;
+  List<TvShow> get tvShows => _tvShows;
 
   String _message = '';
 
@@ -24,7 +24,7 @@ class TopRatedTvShowsNotifier extends ChangeNotifier {
     _state = RequestState.loading;
     notifyListeners();
 
-    final result = await getTopRatedTvShows.execute();
+    final result = await topRatedTvShows.execute();
 
     result.fold(
       (failure) {

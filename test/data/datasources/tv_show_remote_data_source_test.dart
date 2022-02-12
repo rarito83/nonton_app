@@ -1,4 +1,4 @@
-import 'dart:_http';
+import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -56,7 +56,7 @@ void main() {
     });
   });
 
-  group('get Popular TVShows', () {
+  group('get Popular TvShows', () {
     final testTVShowList = TvShowResponse.fromJson(
             json.decode(readJson('dummy_data/popular_tv_shows.json')))
         .tvShowList;
@@ -91,8 +91,8 @@ void main() {
     });
   });
 
-  group('get Top Rated TVShows', () {
-    final testTVShowList = TvShowResponse.fromJson(
+  group('get Top Rated Tv Shows', () {
+    final testTvShowList = TvShowResponse.fromJson(
             json.decode(readJson('dummy_data/top_rated_tv_shows.json')))
         .tvShowList;
 
@@ -105,7 +105,7 @@ void main() {
       // act
       final result = await dataSourceImpl.getTopRatedTvShows();
       // assert
-      expect(result, testTVShowList);
+      expect(result, testTvShowList);
     });
 
     test('should throw ServerException when response code is other than 200',

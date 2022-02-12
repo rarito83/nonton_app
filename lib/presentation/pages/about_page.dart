@@ -26,7 +26,7 @@ class AboutPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(32.0),
                   color: kMikadoYellow,
-                  child: const Text(
+                  child: Text(
                     'Nonton merupakan sebuah aplikasi katalog film yang dikembangkan oleh Dicoding Indonesia sebagai contoh proyek aplikasi untuk kelas Menjadi Flutter Developer Expert.',
                     style: TextStyle(color: Colors.black87, fontSize: 16),
                     textAlign: TextAlign.justify,

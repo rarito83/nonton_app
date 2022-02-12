@@ -13,7 +13,7 @@ abstract class TvShowLocalDataSource {
   Future<List<TvShowTable>> getWatchlistTvShows();
 }
 
-class TvShowLocalDataSourceImpl with TvShowLocalDataSource {
+class TvShowLocalDataSourceImpl implements TvShowLocalDataSource {
   final DatabaseHelper databaseHelper;
 
   TvShowLocalDataSourceImpl({required this.databaseHelper});
