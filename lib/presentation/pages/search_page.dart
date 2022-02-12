@@ -71,7 +71,7 @@ class SearchPage extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       } else if (data.state == RequestState.loaded && _isSearched) {
-        drawerItem == DrawerItem.movie
+        return drawerItem == DrawerItem.movie
             ? _cardMovieSearch(data.searchMovieResult)
             : _cardTvShowSearch(data.searchTvShowsResult);
       }
